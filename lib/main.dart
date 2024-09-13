@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:first_app/main_app.dart';
+import 'package:first_app/chetan/main_app.dart';
+import 'package:first_app/chetan/quiz.dart';
 import 'package:flutter/services.dart';
 
 void main() {
@@ -9,6 +10,6 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(const MainApp());
+    runApp(const Quiz());
   });
 }

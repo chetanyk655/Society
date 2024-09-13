@@ -1,6 +1,6 @@
-import 'package:first_app/question_screen.dart';
+import 'package:first_app/chetan/question_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:first_app/start_screen.dart';
+import 'package:first_app/chetan/start_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
