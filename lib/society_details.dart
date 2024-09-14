@@ -66,11 +66,40 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                       hintText: "Enter Society Name",
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 52, 51, 51), width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 4, 0, 0), width: 1.5),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 55, 54, 54), width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                      ),
+                      hintStyle: GoogleFonts.roboto(
+                        color: Colors.grey,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 35,
+                ),
+                SizedBox(
+                  width: 350,
+                  child: TextField(
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 60, 58, 58),
+                    ),
+                    decoration: InputDecoration(
+                      hintText: "Enter City",
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 6, 0, 0), width: 1.5),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50)),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 7, 0, 0), width: 1.5),
                       ),
                       hintStyle: GoogleFonts.roboto(
                         color: Colors.grey,
@@ -87,68 +116,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                   width: 350,
                   child: TextField(
                     style: GoogleFonts.nunito(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 60, 58, 58),
-                    ),
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.only(bottom: 80, left: 20, top: 10),
-                      hintText: "Enter Society Address",
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                      ),
-                      hintStyle: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SizedBox(
-                  width: 350,
-                  child: TextField(
-                    style: GoogleFonts.nunito(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 60, 58, 58),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Enter City",
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
-                      ),
-                      hintStyle: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontSize: 23,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SizedBox(
-                  width: 350,
-                  child: TextField(
-                    style: GoogleFonts.nunito(
-                      fontSize: 24,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: const Color.fromARGB(255, 60, 58, 58),
                     ),
@@ -156,15 +124,15 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                       hintText: "Enter State",
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
                       ),
                       hintStyle: GoogleFonts.roboto(
                         color: Colors.grey,
-                        fontSize: 23,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -178,12 +146,13 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                     style: TextButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 185, 28, 212),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 10),
+                          horizontal: 40
+                          , vertical: 10),
                     ),
                     child: Text(
                       "SAVE",
                       style: GoogleFonts.inter(
-                          fontSize: 40,
+                          fontSize: 16,
                           letterSpacing: 3,
                           fontWeight: FontWeight.w900,
                           color: const Color.fromARGB(255, 214, 224, 228)),
