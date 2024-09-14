@@ -58,7 +58,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                   width: 350,
                   child: TextField(
                     style: GoogleFonts.nunito(
-                      fontSize: 24,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: const Color.fromARGB(255, 60, 58, 58),
                     ),
@@ -66,15 +66,15 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                       hintText: "Enter Society Name",
                       focusedBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 52, 51, 51), width: 1.5),
                       ),
                       enabledBorder: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Colors.grey, width: 1.5),
+                        borderSide: BorderSide(color: Color.fromARGB(255, 55, 54, 54), width: 1.5),
                       ),
                       hintStyle: GoogleFonts.roboto(
                         color: Colors.grey,
-                        fontSize: 23,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
