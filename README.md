@@ -22,6 +22,3 @@ Team Members:-
   4)Dnyanesh Khandare
  
 
- Chetan OP
-
- Meow meow meow meowwww
