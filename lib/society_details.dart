@@ -54,109 +54,115 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                 const SizedBox(
                   height: 30,
                 ),
-                SizedBox(
-                  width: 350,
-                  child: TextField(
-                    style: GoogleFonts.nunito(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 60, 58, 58),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Enter Society Name",
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 4, 0, 0), width: 1.5),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: 350,
+                        child: TextField(
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 60, 58, 58),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter Society Name",
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 4, 0, 0), width: 1.5),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                            ),
+                            hintStyle: GoogleFonts.roboto(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                      const SizedBox(
+                        height: 35,
                       ),
-                      hintStyle: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(
+                        width: 350,
+                        child: TextField(
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 60, 58, 58),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter City",
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 6, 0, 0), width: 1.5),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 7, 0, 0), width: 1.5),
+                            ),
+                            hintStyle: GoogleFonts.roboto(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: 350,
+                        child: TextField(
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 60, 58, 58),
+                          ),
+                          decoration: InputDecoration(
+                            hintText: "Enter State",
+                            focusedBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                            ),
+                            hintStyle: GoogleFonts.roboto(
+                              color: Colors.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 185, 28, 212),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40
+                                , vertical: 10),
+                          ),
+                          child: Text(
+                            "SAVE",
+                            style: GoogleFonts.inter(
+                                fontSize: 16,
+                                letterSpacing: 3,
+                                fontWeight: FontWeight.w900,
+                                color: const Color.fromARGB(255, 214, 224, 228)),
+                          )),
+                    ],
                   ),
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                SizedBox(
-                  width: 350,
-                  child: TextField(
-                    style: GoogleFonts.nunito(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 60, 58, 58),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Enter City",
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 6, 0, 0), width: 1.5),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 7, 0, 0), width: 1.5),
-                      ),
-                      hintStyle: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SizedBox(
-                  width: 350,
-                  child: TextField(
-                    style: GoogleFonts.nunito(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 60, 58, 58),
-                    ),
-                    decoration: InputDecoration(
-                      hintText: "Enter State",
-                      focusedBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
-                      ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
-                      ),
-                      hintStyle: GoogleFonts.roboto(
-                        color: Colors.grey,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 185, 28, 212),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40
-                          , vertical: 10),
-                    ),
-                    child: Text(
-                      "SAVE",
-                      style: GoogleFonts.inter(
-                          fontSize: 16,
-                          letterSpacing: 3,
-                          fontWeight: FontWeight.w900,
-                          color: const Color.fromARGB(255, 214, 224, 228)),
-                    ))
+                )
               ],
             ),
           )),
