@@ -74,6 +74,7 @@ flutter:
     - assets/quiz-logo.png
     - assets/security.png
     - assets/images/left-arrow-back-svgrepo-com.svg
+    - assets/ambulance-svgrepo-com.svg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

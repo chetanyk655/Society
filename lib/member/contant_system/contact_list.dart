@@ -3,15 +3,16 @@ import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ContactListDisplay extends StatefulWidget{
+class ContactListDisplay extends StatefulWidget {
+  const ContactListDisplay({super.key});
   @override
   State<StatefulWidget> createState() {
     return _ContactListDisplayState();
   }
 }
 
-class _ContactListDisplayState extends State<ContactListDisplay>{
-  List<ContactList> contactList=[
+class _ContactListDisplayState extends State<ContactListDisplay> {
+  List<ContactList> contactList = [
     ContactList(contactName: 'kashyap', contactNumber: 9833150385),
   ];
   @override
@@ -22,22 +23,23 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-                SafeArea(
-                      left: false,
-                      top: true,
-                      bottom: true,
-                      right: false,
-                      child: Text(
-                                "Contact List",
-                                style: GoogleFonts.nunito(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.w700,
-                                ),
-                                textAlign: TextAlign.center,
-                                ),
+              SafeArea(
+                left: false,
+                top: true,
+                bottom: true,
+                right: false,
+                child: Text(
+                  "Contact List",
+                  style: GoogleFonts.nunito(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                Expanded(child: ListedView(displayList: contactList)),
-          ],),
+              ),
+              Expanded(child: ListedView(displayList: contactList)),
+            ],
+          ),
         ),
       ),
     );
