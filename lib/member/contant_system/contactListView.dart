@@ -1,3 +1,4 @@
+import 'package:first_app/member/contant_system/contact_card.dart';
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,7 @@ class ListedView extends StatelessWidget{
       itemBuilder: (ctx,index){
         return Column(
           children: [
-            Text(displayList[index].contactName),
-            Text((displayList[index].contactNumber).toString()),
+            CardForContact(contactCardList: displayList[index]),
           ],
         );
       }

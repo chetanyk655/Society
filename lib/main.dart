@@ -2,8 +2,8 @@ import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:first_app/society_details.dart';
-import 'package:first_app/emergency_contacts.dart';
-import 'package:flutter/rendering.dart';
+//import 'package:first_app/emergency_contacts.dart';
+//import 'package:flutter/rendering.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -11,10 +11,11 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(const MaterialApp(
+    runApp( MaterialApp(
       home: Scaffold(
-        body: EmergencyContacts(),
+        body: ContactListDisplay(),
       ),
     ));
   });
 }
+
