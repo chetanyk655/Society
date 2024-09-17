@@ -16,12 +16,41 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
   List<ContactList> contactList=[
     ContactList(contactName: 'kashyap', contactNumber: 9833150385),
   ];
-  void _openAddExpenseOverlay(){
+
+  void _addExpense(ContactList contact){
+    
+    setState(() {
+      contactList.add(contact);
+    });
+    
+  }
+
+  void _removeContact(ContactList contact){
+    final expenseIndex = contactList.indexOf(contact);
+    setState(() {
+      contactList.remove(contact);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+      duration: const Duration(seconds: 3),
+      content: const Text('Contact Deleted'),
+      action: SnackBarAction(
+        label: 'undo',
+        onPressed: (){
+          setState(() {
+            contactList.insert(expenseIndex,contact);
+          });
+        })
+      ),
+      );
+  }
+
+  void _openAddContactOverlay(){
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (ctx) =>  ModalContact(),
+      builder: (ctx) =>  ModalContact(onAddExpense: _addExpense,),
     );
   } 
   @override
@@ -45,7 +74,7 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
                         ),
               ),
               Expanded(child: ListedView(displayList: contactList),),
-              ElevatedButton(onPressed: _openAddExpenseOverlay, child: const Text('Add new contact')),
+              ElevatedButton(onPressed: _openAddContactOverlay, child: const Text('Add new contact')),
               const SizedBox(height:30)              
               
         ],);

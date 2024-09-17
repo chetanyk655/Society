@@ -4,12 +4,24 @@ import 'package:flutter/material.dart';
 class CardForContact extends StatelessWidget{
   CardForContact({super.key,required this.contactCardList});
   final ContactList contactCardList;
+  
   @override
   Widget build(BuildContext context) {
     return Card(
       child:InkWell(
-        onTap: (){
+        onLongPress: (){
+          showDialog(context: context, builder: (ctx)=>
+        AlertDialog(
+          title: const Text('Do you want to delete this contact'),
           
+          actions: [
+            TextButton(onPressed: (){
+              Navigator.pop(ctx);
+            }, child: const Text('cancel')),
+            TextButton(onPressed: (){}, child: const Text('Delete'))
+          ],
+        )
+      );
         },
         child: SizedBox(
         width: 300,

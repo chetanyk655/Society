@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class ListedView extends StatelessWidget{
   ListedView({super.key,required this.displayList});
+
+  
   final List<ContactList> displayList;
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class ListedView extends StatelessWidget{
       itemBuilder: (ctx,index){
         return Column(
           children: [
-            CardForContact(contactCardList: displayList[index]),
+            CardForContact(contactCardList: displayList[index],),
           ],
         );
       }
