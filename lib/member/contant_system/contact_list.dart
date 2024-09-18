@@ -29,6 +29,7 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
     final expenseIndex = contactList.indexOf(contact);
     setState(() {
       contactList.remove(contact);
+      Navigator.pop(context);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar( SnackBar(
@@ -73,7 +74,7 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
                         textAlign: TextAlign.center,
                         ),
               ),
-              Expanded(child: ListedView(displayList: contactList),),
+              Expanded(child: ListedView(displayList: contactList,onRemove: _removeContact,),),
               ElevatedButton(onPressed: _openAddContactOverlay, child: const Text('Add new contact')),
               const SizedBox(height:30)              
               
