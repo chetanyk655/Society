@@ -13,9 +13,7 @@ class ContactListDisplay extends StatefulWidget{
 }
 
 class _ContactListDisplayState extends State<ContactListDisplay>{
-  List<ContactList> contactList=[
-    ContactList(contactName: 'kashyap', contactNumber: 9833150385),
-  ];
+  List<ContactList> contactList=[];
 
   void _addExpense(ContactList contact){
     
@@ -56,29 +54,33 @@ class _ContactListDisplayState extends State<ContactListDisplay>{
   } 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-              SafeArea(
-                left: false,
-                top: true,
-                bottom: true,
-                right: false,
-                child: Text(
-                        "Contact List",
-                        style: GoogleFonts.nunito(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w700,
-                               ),
-                        textAlign: TextAlign.center,
-                        ),
-              ),
-              Expanded(child: ListedView(displayList: contactList,onRemove: _removeContact,),),
-              ElevatedButton(onPressed: _openAddContactOverlay, child: const Text('Add new contact')),
-              const SizedBox(height:30)              
-              
-        ],);
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                  SafeArea(
+                    left: false,
+                    top: true,
+                    bottom: true,
+                    right: false,
+                    child: Text(
+                            "Contact List",
+                            style: GoogleFonts.nunito(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w700,
+                                   ),
+                            textAlign: TextAlign.center,
+                            ),
+                  ),
+                  Expanded(child: ListedView(displayList: contactList,onRemove: _removeContact,),),
+                  ElevatedButton(onPressed: _openAddContactOverlay, child: const Text('Add new contact')),
+                  const SizedBox(height:30)              
+                  
+            ],),
+      ),
+    );
       
     
   }
