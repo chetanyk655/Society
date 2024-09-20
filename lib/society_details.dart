@@ -176,7 +176,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             String value2 = _controller2
                                 .text; // Extract value from second TextField
                             String value3 = _controller3.text;
-                            Api.send(value1, value2,
+                            Api().send(value1, value2,
                                 value3); // Extract value from third TextField
                           },
                           style: TextButton.styleFrom(
@@ -194,6 +194,15 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                 color:
                                     const Color.fromARGB(255, 214, 224, 228)),
                           )),
+                      TextButton(
+                          onPressed: () {
+                            Api().updateDetails(2, {
+                              "name": _controller1.text,
+                              "city": _controller2.text,
+                              "state": _controller3.text,
+                            });
+                          },
+                          child: Text("Update"))
                     ],
                   ),
                 )
