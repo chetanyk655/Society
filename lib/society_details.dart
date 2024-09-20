@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 
 class SocietyDetails extends StatefulWidget {
   const SocietyDetails({super.key});
@@ -12,6 +15,27 @@ class SocietyDetails extends StatefulWidget {
 }
 
 class _SocietyDetailsState extends State<SocietyDetails> {
+  static const baseUrl = "http://192.168.1.5/api/";
+  static send(String name, String city, String state) async {
+    var url = Uri.parse("${baseUrl}send");
+    try {
+      final res = await http
+          .post(url, body: {"name": name, "city": city, "state": state});
+
+      if (res.statusCode == 200) {
+        var data = jsonDecode(res.body.toString());
+        print(data);
+      } else {
+        print("Failed to get response");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
   @override
   Widget build(context) {
     return MaterialApp(
@@ -65,15 +89,22 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             fontWeight: FontWeight.bold,
                             color: const Color.fromARGB(255, 60, 58, 58),
                           ),
+                          controller: _controller1,
                           decoration: InputDecoration(
                             hintText: "Enter Society Name",
                             focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 4, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 4, 0, 0),
+                                  width: 1.5),
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  width: 1.5),
                             ),
                             hintStyle: GoogleFonts.roboto(
                               color: Colors.grey,
@@ -94,15 +125,22 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             fontWeight: FontWeight.bold,
                             color: const Color.fromARGB(255, 60, 58, 58),
                           ),
+                          controller: _controller2,
                           decoration: InputDecoration(
                             hintText: "Enter City",
                             focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 6, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 6, 0, 0),
+                                  width: 1.5),
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 7, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 7, 0, 0),
+                                  width: 1.5),
                             ),
                             hintStyle: GoogleFonts.roboto(
                               color: Colors.grey,
@@ -123,15 +161,22 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             fontWeight: FontWeight.bold,
                             color: const Color.fromARGB(255, 60, 58, 58),
                           ),
+                          controller: _controller3,
                           decoration: InputDecoration(
                             hintText: "Enter State",
                             focusedBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  width: 1.5),
                             ),
                             enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                              borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50)),
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 0, 0, 0),
+                                  width: 1.5),
                             ),
                             hintStyle: GoogleFonts.roboto(
                               color: Colors.grey,
@@ -145,12 +190,20 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                         height: 50,
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            String value1 = _controller1
+                                .text; // Extract value from first TextField
+                            String value2 = _controller2
+                                .text; // Extract value from second TextField
+                            String value3 = _controller3.text;
+                            send(value1, value2,
+                                value3); // Extract value from third TextField
+                          },
                           style: TextButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 185, 28, 212),
+                            backgroundColor:
+                                const Color.fromARGB(255, 185, 28, 212),
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 40
-                                , vertical: 10),
+                                horizontal: 40, vertical: 10),
                           ),
                           child: Text(
                             "SAVE",
@@ -158,7 +211,8 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                 fontSize: 16,
                                 letterSpacing: 3,
                                 fontWeight: FontWeight.w900,
-                                color: const Color.fromARGB(255, 214, 224, 228)),
+                                color:
+                                    const Color.fromARGB(255, 214, 224, 228)),
                           )),
                     ],
                   ),

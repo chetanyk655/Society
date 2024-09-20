@@ -3,7 +3,7 @@ import 'package:first_app/member/dashboard.dart';
 import 'package:first_app/member/emergency_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:first_app/society_details.dart';
+import 'package:first_app/society_details.dart';
 //import 'package:first_app/emergency_contacts.dart';
 //import 'package:flutter/rendering.dart';
 
@@ -13,11 +13,10 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(  const MaterialApp(
+    runApp(const MaterialApp(
       home: Scaffold(
-        body: Dashboard(),
+        body: SocietyDetails(),
       ),
     ));
   });
 }
-
