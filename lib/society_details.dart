@@ -1,9 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
+import 'package:first_app/services/api.dart';
 
 class SocietyDetails extends StatefulWidget {
   const SocietyDetails({super.key});
@@ -15,24 +13,6 @@ class SocietyDetails extends StatefulWidget {
 }
 
 class _SocietyDetailsState extends State<SocietyDetails> {
-  static const baseUrl = "http://192.168.1.5/api/";
-  static send(String name, String city, String state) async {
-    var url = Uri.parse("${baseUrl}send");
-    try {
-      final res = await http
-          .post(url, body: {"name": name, "city": city, "state": state});
-
-      if (res.statusCode == 200) {
-        var data = jsonDecode(res.body.toString());
-        print(data);
-      } else {
-        print("Failed to get response");
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
   final TextEditingController _controller3 = TextEditingController();
@@ -196,7 +176,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                             String value2 = _controller2
                                 .text; // Extract value from second TextField
                             String value3 = _controller3.text;
-                            send(value1, value2,
+                            Api.send(value1, value2,
                                 value3); // Extract value from third TextField
                           },
                           style: TextButton.styleFrom(
