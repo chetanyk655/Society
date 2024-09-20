@@ -1,3 +1,4 @@
+import 'package:first_app/login_screen.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/dashboard.dart';
 import 'package:first_app/member/emergency_contacts.dart';
@@ -13,10 +14,10 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(const MaterialApp(
-      home: Scaffold(
-        body: SocietyDetails(),
-      ),
-    ));
+    runApp(
+      const MaterialApp(
+        home: LoginScreen()
+      )
+    );
   });
 }

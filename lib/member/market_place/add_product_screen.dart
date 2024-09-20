@@ -18,11 +18,12 @@ class Product {
 }
 
 class AddProductScreen extends StatefulWidget {
+  const AddProductScreen({super.key});
   @override
-  _AddProductScreenState createState() => _AddProductScreenState();
+  AddProductScreenState createState() => AddProductScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class AddProductScreenState extends State<AddProductScreen> {
   final _formKey = GlobalKey<FormState>();
   String name = '';
   String description = '';
@@ -33,7 +34,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Product'),
+        title: const Text('Add Product'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -42,31 +43,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
           child: Column(
             children: [
               TextFormField(
-                decoration: InputDecoration(labelText: 'Product Name'),
+                decoration: const InputDecoration(labelText: 'Product Name'),
                 onSaved: (value) {
                   name = value ?? '';
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: const InputDecoration(labelText: 'Description'),
                 onSaved: (value) {
                   description = value ?? '';
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Price'),
+                decoration:const  InputDecoration(labelText: 'Price'),
                 keyboardType: TextInputType.number,
                 onSaved: (value) {
                   price = double.tryParse(value ?? '0') ?? 0.0;
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Image URL'),
+                decoration: const InputDecoration(labelText: 'Image URL'),
                 onSaved: (value) {
                   imageUrl = value ?? '';
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
@@ -83,7 +84,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     );
                   }
                 },
-                child: Text('Add Product'),
+                child: const Text('Add Product'),
               ),
             ],
           ),
