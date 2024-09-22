@@ -1,5 +1,7 @@
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/emergency_contacts.dart';
+import 'package:first_app/member/feedback.dart';
+import 'package:first_app/member/market_place/marketplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -200,7 +202,11 @@ class _DashBoardState extends State<Dashboard>{
                 SizedBox(
                   width: 150,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  MarketplaceScreen()));
+                      },
                       style: ElevatedButton.styleFrom(
                         // Text color
                         padding: const EdgeInsets.all(10),
@@ -221,7 +227,11 @@ class _DashBoardState extends State<Dashboard>{
                 SizedBox(
                   width: 150,
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>  FeedBackScreen()));
+                      },
                       style: ElevatedButton.styleFrom(
                         // Text color
                         padding: const EdgeInsets.all(10),
@@ -230,7 +240,7 @@ class _DashBoardState extends State<Dashboard>{
                         backgroundColor: Colors.white,
                       ),
                       child: Text(
-                        "Complaints",
+                        "Complaints and Feedback",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.roboto(
                             fontSize: 16, fontWeight: FontWeight.bold),
