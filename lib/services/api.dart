@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Api {
-  static const baseUrl = "http://<ip>/api";
+  static const baseUrl = "https://fd89-45-124-142-62.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -23,7 +23,7 @@ class Api {
   }
 
   getDetails() async {
-    var url = Uri.parse("${baseUrl}/getDetails");
+    var url = Uri.parse("${baseUrl}/getdetails");
     final res = await http.get(url);
     try {
       if (res.statusCode == 200) {
