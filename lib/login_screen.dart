@@ -27,13 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 40,
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 50,
-            ),
-          ),
           const Center(
             child: Text(
               'Login Account',
