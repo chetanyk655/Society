@@ -1,23 +1,14 @@
 import 'package:first_app/chetan/dashboard.dart';
 import 'package:first_app/member/new_dashboard.dart';
-import 'package:first_app/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
+import 'package:first_app/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() {
-    // TODO: implement createElement
-    return _LoginScreenState();
-  }
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class Registration extends StatelessWidget {
+  Registration({super.key});
   final TextEditingController _controller1 = TextEditingController();
   final TextEditingController _controller2 = TextEditingController();
-  bool _obscureText = true;
+  final TextEditingController _controller3 = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,20 +18,44 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 40,
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()));
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 50,
+            ),
+          ),
           const Center(
-            child: Text(
-              'Login Account',
+            child: const Text(
+              ' SIGN UP',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
           ),
           const SizedBox(
-            height: 150,
+            height: 80,
           ),
           Center(
             child: SizedBox(
               width: 375,
               child: TextField(
                   controller: _controller1,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'EMAIL ID',
+                      hintStyle: TextStyle(color: Colors.black))),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: SizedBox(
+              width: 375,
+              child: TextField(
+                  controller: _controller2,
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'USERNAME',
@@ -54,23 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SizedBox(
               width: 375,
               child: TextField(
-                  obscureText: _obscureText, // Hide the input
-                  controller: _controller2,
-                  decoration: InputDecoration(
+                  controller: _controller3,
+                  decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'PASSWORD',
-                      hintStyle: TextStyle(color: Colors.black),
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText; // Toggle visibility
-                            });
-                          },
-                          icon: Icon(
-                            _obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          )))),
+                      hintStyle: TextStyle(color: Colors.black))),
             ),
           ),
           const SizedBox(
@@ -81,38 +84,35 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 200,
               child: OutlinedButton.icon(
                 onPressed: () {
-                  Api().checklogin({
-                    "username": _controller1.text,
-                    "password": _controller2.text
-                  }).then((result) => {
-                        if (result)
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const NewDashboard()))
-                        else
-                          print("Cant login")
-                      });
+                  Api()
+                      .registration(
+                        email: _controller1.text,
+                        username: _controller2.text,
+                        password: _controller3.text,
+                      )
+                      .then((result) => {
+                            if (result)
+                              {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()))
+                              }
+                            else
+                              print("Cant Sign Up")
+                          });
                 },
                 style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.black,
                     backgroundColor: Colors.amber.shade100),
                 label: const Text(
-                  'LOG IN',
+                  'SIGN UP',
                   style: TextStyle(fontSize: 15),
                 ),
                 icon: const Icon(Icons.arrow_circle_right_outlined),
               ),
             ),
           ),
-          Center(
-            child: TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Registration()));
-                },
-                child: Text("Don't have account?Sign up here")),
-          )
         ],
       ),
     );
