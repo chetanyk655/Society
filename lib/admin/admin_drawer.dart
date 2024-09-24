@@ -1,3 +1,4 @@
+import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:flutter/material.dart';
 
 class AdminDrawer extends StatelessWidget{
@@ -65,7 +66,14 @@ class AdminDrawer extends StatelessWidget{
             ListTile(
               leading: const Icon(Icons.contact_mail_sharp,size: 26,color: Colors.white,),
               title: const Text('Contact List',style: TextStyle(color: Colors.white,fontSize: 20),),
-               onTap: (){},   
+               onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ContactListDisplay()),
+                  );
+               },   
             ),
             ListTile(
               leading: const Icon(Icons.emergency,size: 26,color: Colors.white,),
