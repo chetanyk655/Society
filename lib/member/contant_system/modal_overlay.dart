@@ -46,30 +46,41 @@ class _ModalContactState extends State<ModalContact>{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _nameController,
-          maxLength: 30,
-          decoration: const InputDecoration(
-            label: Text('Enter Contact Name')
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          TextField(
+            style:const TextStyle(color: Colors.white, fontSize: 16),
+            controller: _nameController,
+            maxLength: 30,
+            decoration: const InputDecoration(
+              label: Text('Enter Contact Name', style: TextStyle(color: Colors.white, fontSize: 16))
+            ),
           ),
-        ),
-        TextField(
-          controller: _numberController,
-          maxLength: 10,
-          keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            prefix: Text('+91 '),
-            label: Text('Enter Phone Number')
+          TextField(
+            style:const TextStyle(color: Colors.white, fontSize: 16),
+            controller: _numberController,
+            maxLength: 10,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              
+              prefix: Text('+91 ' ,style: TextStyle(color: Colors.white, fontSize: 16)),
+              label: Text('Enter Phone Number', style: TextStyle(color: Colors.white, fontSize: 16))
+            ),
           ),
-        ),
-        const SizedBox(height: 10,),
-        Row(children: [
-          ElevatedButton(onPressed: _submitExpenseData, child: const Text('SAVE')),
-          ElevatedButton(onPressed: (){Navigator.pop(context);}, child: const Text('CANCEL')),
-        ],)
-      ],
+          const SizedBox(height: 10,),
+          Row(children: [
+            ElevatedButton(onPressed: _submitExpenseData,style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 135, 124, 25)
+                  ), child: const Text('SAVE', style: TextStyle(color: Colors.white, fontSize: 16))),
+            const SizedBox(width: 15,),
+            ElevatedButton(onPressed: (){Navigator.pop(context);},style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 135, 124, 25)
+                  ), child: const Text('CANCEL', style: TextStyle(color: Colors.white, fontSize: 16))),
+          ],)
+        ],
+      ),
     );
   }
 }
