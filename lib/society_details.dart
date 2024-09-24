@@ -194,15 +194,7 @@ class _SocietyDetailsState extends State<SocietyDetails> {
                                 color:
                                     const Color.fromARGB(255, 214, 224, 228)),
                           )),
-                      TextButton(
-                          onPressed: () {
-                            Api().updateDetails(2, {
-                              "name": _controller1.text,
-                              "city": _controller2.text,
-                              "state": _controller3.text,
-                            });
-                          },
-                          child: Text("Update"))
+                      TextButton(onPressed: () {}, child: Text("Update"))
                     ],
                   ),
                 )

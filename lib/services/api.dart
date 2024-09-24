@@ -1,10 +1,12 @@
+import 'dart:ffi';
+
 import 'package:first_app/society_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Api {
-  static const baseUrl = "https://fd89-45-124-142-62.ngrok-free.app/api";
+  static const baseUrl = "http://192.168.1.7:5000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -23,7 +25,7 @@ class Api {
   }
 
   getDetails() async {
-    var url = Uri.parse("${baseUrl}/getdetails");
+    var url = Uri.parse("${baseUrl}getdetails");
     final res = await http.get(url);
     try {
       if (res.statusCode == 200) {
@@ -45,6 +47,30 @@ class Api {
       print(jsonDecode(res.body));
     } else {
       print("failed to update data");
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  Future checklogin(body) async {
+    var url = Uri.parse("$baseUrl/checklogin");
+    final res = await http.post(url, body: body);
+
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future registration({email, username, password}) async {
+    var url = Uri.parse("$baseUrl/registration");
+    print(username);
+    final res = await http.post(url,
+        body: {"username": username, "password": password, "email": email});
+    if (res.statusCode == 201) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
