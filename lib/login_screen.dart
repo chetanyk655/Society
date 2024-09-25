@@ -1,5 +1,5 @@
 import 'package:first_app/chetan/dashboard.dart';
-//import 'package:first_app/member/new_dashboard.dart';
+import 'package:first_app/member/new_dashboard.dart';
 import 'package:first_app/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const NewDashboard()))
+                                  builder: (context) => const DashBoardFinal()))
                         else
                           print("Cant login")
                       });
