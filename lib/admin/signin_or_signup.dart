@@ -1,3 +1,5 @@
+import 'package:first_app/admin/admin_login.dart';
+import 'package:first_app/admin/register_page.dart';
 import 'package:flutter/material.dart';
 
 class SigninOrSignup extends StatelessWidget {
@@ -5,6 +7,13 @@ class SigninOrSignup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+            color: Colors.white
+          ),
+       
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -12,7 +21,7 @@ class SigninOrSignup extends StatelessWidget {
           Image.asset('assets/images/login_gif.gif'),
           Container(
             width: double.infinity,
-            height: 250,
+            height: 216,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -30,7 +39,10 @@ class SigninOrSignup extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black
                   ),
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>const AdminLogin()) );
+                    },
                     child: const Text('Login In',style: TextStyle(color: Colors.white, fontSize: 20),),
                   ),
                 ),
@@ -42,7 +54,10 @@ class SigninOrSignup extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black
                   ),
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>const AdminRegister()) );
+                    },
                     child: const Text('Sign Up',style: TextStyle(color: Colors.white, fontSize: 20),),
                   ),
                 ),

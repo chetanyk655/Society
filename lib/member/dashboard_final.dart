@@ -1,4 +1,7 @@
+import 'package:first_app/member/Complaint_and_feedback.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
+import 'package:first_app/member/notice.dart';
+import 'package:first_app/member/payment.dart';
 import 'package:flutter/material.dart';
 
 class DashBoardFinal extends StatelessWidget {
@@ -7,6 +10,7 @@ class DashBoardFinal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const Text(
             'Menu Bar',
             style: TextStyle(color: Colors.white),
@@ -34,7 +38,13 @@ class DashBoardFinal extends StatelessWidget {
                 mainAxisSpacing: 20),
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) =>  PaymentMember(),
+                      ),
+                  );
+                },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
@@ -77,7 +87,13 @@ class DashBoardFinal extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) => const NoticeMember(),
+                      ),
+                  );
+                },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
@@ -117,7 +133,13 @@ class DashBoardFinal extends StatelessWidget {
                     )),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(
+                          builder: (context) => const ComplaintAndFeedback(),
+                      ),
+                  );
+                },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(
