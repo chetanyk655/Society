@@ -6,8 +6,8 @@ class FeedBackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-        MaterialApp(
-          home: Scaffold(
+        
+           Scaffold(
             body: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -65,7 +65,7 @@ class FeedBackScreen extends StatelessWidget {
                 ),
               ],
             ),
-          ),
+          
         );
 
   }

@@ -41,8 +41,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   http: ^1.2.2
   flutter_profile_picture: ^2.0.0
-  flutter_phone_direct_caller: ^2.1.1
-  url_launcher: ^6.3.0
+  
+  
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +79,8 @@ flutter:
     - assets/security.png
     - assets/images/left-arrow-back-svgrepo-com.svg
     - assets/ambulance-svgrepo-com.svg
+    - assets/images/logo_final.png
+    - assets/images/login_gif.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
