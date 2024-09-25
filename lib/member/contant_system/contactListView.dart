@@ -2,22 +2,11 @@
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class ListedView extends StatelessWidget{
-  void launchDialer(String phoneNumber) async {
-  final Uri launchUri = Uri(
-    scheme: 'tel',
-    path: phoneNumber,
-  );
-
-  if (await canLaunchUrl(Uri.parse(launchUri.toString()))) {
-    await launchUrl(Uri.parse(launchUri.toString()));
-  } else {
-    throw 'Could not launch $launchUri';
-  }
-}
+  
 
  const  ListedView({super.key,required this.displayList,required this.onRemove});
 
@@ -37,10 +26,7 @@ class ListedView extends StatelessWidget{
               Card(
         color: const Color.fromARGB(255, 135, 124, 25),        
         child:InkWell(
-          onDoubleTap: (){
-            launchDialer('67364732');
-          },
-        
+          
           onLongPress: (){
             showDialog(context: context, builder: (ctx)=>
               AlertDialog(

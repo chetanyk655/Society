@@ -1,3 +1,4 @@
+import 'package:first_app/admin/notice.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,14 @@ class AdminDrawer extends StatelessWidget{
             ListTile(
               leading: const Icon(Icons.message,size: 26,color: Colors.white,),
               title: const Text('Notice',style: TextStyle(color: Colors.white,fontSize: 20),),
-               onTap: (){},   
+               onTap: (){
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NoticePage()),
+                  );
+               },     
             ),
             ListTile(
               leading: const Icon(Icons.notification_add,size: 26,color: Colors.white,),

@@ -2,7 +2,7 @@ import 'package:first_app/member/contant_system/contactListView.dart';
 import 'package:first_app/member/contant_system/modal_overlay.dart';
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 class ContactListDisplay extends StatefulWidget {
   const ContactListDisplay({super.key});
