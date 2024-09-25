@@ -5,6 +5,7 @@ import 'package:first_app/member/dashboard.dart';
 import 'package:first_app/member/dashboard_final.dart';
 import 'package:first_app/member/emergency_contacts.dart';
 import 'package:first_app/registration.dart';
+import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:first_app/society_details.dart';
@@ -17,6 +18,6 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(const MaterialApp(home: AdminDashboard()));
+    runApp(const MaterialApp(home: SelectionScreen()));
   });
 }

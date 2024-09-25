@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-class NoticePage extends StatelessWidget {
-  const NoticePage({super.key});
+class ComplaintAndFeedback extends StatelessWidget {
+  const ComplaintAndFeedback({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +9,7 @@ class NoticePage extends StatelessWidget {
             color: Colors.white
           ),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        title: const Text('NOTICE',style: TextStyle(color: Colors.white, fontSize: 18)),
+        title: const Text('Complaint and Feedback',style: TextStyle(color: Colors.white, fontSize: 18)),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -34,7 +34,7 @@ class NoticePage extends StatelessWidget {
               maxLines: 10,
               style: TextStyle(color: Colors.white, fontSize: 18),
               decoration: InputDecoration(
-                hintText: 'Enter your notice here...',
+                hintText: 'Enter your message here...',
                 hintStyle: TextStyle(color: Colors.white, fontSize: 18),
                 fillColor: Color.fromARGB(255, 0, 0, 0),
                 filled: true,
@@ -48,7 +48,7 @@ class NoticePage extends StatelessWidget {
               },
               
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Button color
+                backgroundColor: Colors.purple, // Button color
                 padding:
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 textStyle: const TextStyle(fontSize: 20),
