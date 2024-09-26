@@ -1,7 +1,10 @@
+import 'package:first_app/admin/Complaint_and_feedbak_admin.dart';
 import 'package:first_app/admin/admin_payment.dart';
-import 'package:first_app/admin/member_registration.dart';
+import 'package:first_app/admin/facility_booking.dart';
+//import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/notice.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
+import 'package:first_app/member/market_place/marketPlace_screen.dart';
 import 'package:flutter/material.dart';
 
 class AdminDrawer extends StatelessWidget {
@@ -76,7 +79,7 @@ class AdminDrawer extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
+              /*ListTile(
                 leading: const Icon(
                   Icons.message,
                   size: 26,
@@ -93,7 +96,7 @@ class AdminDrawer extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const MemberRegister()),
                   );
                 },
-              ),
+              ),*/
               ListTile(
                 leading: const Icon(
                   Icons.notification_add,
@@ -104,7 +107,12 @@ class AdminDrawer extends StatelessWidget {
                   'Complaint and Feedback',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ComplaintAndFeedbakAdmin()));
+                },
               ),
               ListTile(
                 leading: const Icon(
@@ -116,7 +124,12 @@ class AdminDrawer extends StatelessWidget {
                   'Facility Booking',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FacilityBookingAdmin()));
+                },
               ),
               ListTile(
                 leading: const Icon(
@@ -140,7 +153,12 @@ class AdminDrawer extends StatelessWidget {
                   'Market Place',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  MarketplacePage()));
+                },
               ),
               ListTile(
                 leading: const Icon(

@@ -1,7 +1,6 @@
+import 'package:first_app/admin/facility_booking.dart';
 import 'package:first_app/member/Complaint_and_feedback.dart';
-import 'package:first_app/member/contant_system/contact_list.dart';
-import 'package:first_app/member/facility_booking_screen.dart';
-import 'package:first_app/member/market_place/marketPlace_screen.dart';
+//import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/notice.dart';
 import 'package:first_app/member/payment.dart';
 import 'package:flutter/material.dart';
@@ -122,7 +121,7 @@ class DashBoardFinal extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const FacilityBookingScreen(),
+                        builder: (context) => const FacilityBookingAdmin(),
                       ),
                     );
                   },
@@ -150,7 +149,7 @@ class DashBoardFinal extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ComplaintAndFeedback(),
+                        builder: (context) => ComplaintAndFeedback(),
                       ),
                     );
                   },
@@ -174,14 +173,7 @@ class DashBoardFinal extends StatelessWidget {
                       )),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  MarketplacePage(),
-                      ),
-                    );
-                  },
+                  onTap: () {},
                   splashColor: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -202,13 +194,7 @@ class DashBoardFinal extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 18))),
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ContactListDisplay()),
-                    );
-                  },
+                  onTap: () {},
                   splashColor: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
