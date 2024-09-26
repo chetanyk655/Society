@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Api {
-  static const baseUrl = "https://8096-45-124-142-96.ngrok-free.app/api";
+  static const baseUrl = "http://192.168.1.7:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -95,7 +95,8 @@ class Api {
   }
 
   Future storeComplaintAndFeedback(body) async {
-    var url = Uri.parse("$baseUrl/store-$body.ticket");
+    var url = Uri.parse("$baseUrl/${body['ticket']}");
+    print(body);
     final res = await http.post(url, body: jsonEncode(body), headers: {
       'Content-Type': 'application/json', // Specify that you're sending JSON
     });
