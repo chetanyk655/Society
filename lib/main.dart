@@ -18,6 +18,6 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((fn) {
-    runApp(const MaterialApp(home: SelectionScreen()));
+    runApp(const MaterialApp(home: AdminDashboard()));
   });
 }
