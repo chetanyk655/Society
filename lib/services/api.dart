@@ -93,4 +93,14 @@ class Api {
       return res;
     }
   }
+
+  Future storeComplaintAndFeedback(body) async {
+    var url = Uri.parse("$baseUrl/store-$body.ticket");
+    final res = await http.post(url, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+    if (res.statusCode == 200) {
+      return res;
+    }
+  }
 }
