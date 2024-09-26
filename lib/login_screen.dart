@@ -1,5 +1,4 @@
 import 'package:first_app/chetan/dashboard.dart';
-import 'package:first_app/member/dashboard_final.dart';
 import 'package:first_app/member/new_dashboard.dart';
 import 'package:first_app/registration.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Registration()));
                 },
-                child: Text("Don't have account?Sign up here")),
+                child: const Text("Don't have account?Sign up here")),
           )
         ],
       ),

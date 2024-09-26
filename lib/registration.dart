@@ -1,5 +1,5 @@
 import 'package:first_app/chetan/dashboard.dart';
-import 'package:first_app/member/new_dashboard.dart';
+//import 'package:first_app/member/new_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'package:first_app/login_screen.dart';
@@ -12,6 +12,7 @@ class Registration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -21,7 +22,7 @@ class Registration extends StatelessWidget {
           IconButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
+                  MaterialPageRoute(builder: (context) => const LoginScreen()));
             },
             icon: const Icon(
               Icons.arrow_back,
