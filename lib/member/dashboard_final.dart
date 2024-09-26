@@ -1,5 +1,7 @@
 import 'package:first_app/member/Complaint_and_feedback.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
+import 'package:first_app/member/facility_booking_screen.dart';
+import 'package:first_app/member/market_place/marketPlace_screen.dart';
 import 'package:first_app/member/notice.dart';
 import 'package:first_app/member/payment.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +10,9 @@ class DashBoardFinal extends StatelessWidget {
   const DashBoardFinal({super.key});
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
+    return 
+      
+     Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: const Text(
@@ -116,7 +118,14 @@ class DashBoardFinal extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 18))),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FacilityBookingScreen(),
+                      ),
+                    );
+                  },
                   splashColor: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -165,7 +174,14 @@ class DashBoardFinal extends StatelessWidget {
                       )),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  MarketplacePage(),
+                      ),
+                    );
+                  },
                   splashColor: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -233,7 +249,7 @@ class DashBoardFinal extends StatelessWidget {
                 ),
               ],
             ),
-          )),
+          ),
     );
   }
 }
