@@ -1,31 +1,34 @@
-import 'package:first_app/member/dashboard_final.dart';
-import 'package:flutter/material.dart';
+import 'package:first_app/admin/admin_dashboard.dart';
+import 'package:first_app/admin/signin_or_signup.dart';
 import 'package:first_app/services/api.dart';
+import 'package:flutter/material.dart';
 
-class MemberLogin extends StatefulWidget {
-  const MemberLogin({super.key});
+class MemberRegister extends StatefulWidget {
+  const MemberRegister({super.key});
   @override
   State<StatefulWidget> createState() {
-    return _MemberLoginState();
+    return _MemberRegisterState();
   }
 }
 
-class _MemberLoginState extends State<MemberLogin> {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
+class _MemberRegisterState extends State<MemberRegister> {
   bool _passwordVisible = false;
   @override
   void initState() {
     _passwordVisible = false;
   }
 
+  final TextEditingController name = TextEditingController();
+  final TextEditingController houseNo = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        title: const Text('Login',
+        title: const Text('Sign Up',
             style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
       body: Container(
@@ -46,10 +49,10 @@ class _MemberLoginState extends State<MemberLogin> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
               const Text(
-                'Login to your Account',
+                'Create Member Account',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -57,6 +60,30 @@ class _MemberLoginState extends State<MemberLogin> {
               ),
               const SizedBox(
                 height: 30,
+              ),
+              TextField(
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                controller: name,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    hintText: 'Enter Your Name',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                controller: houseNo,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    hintText: 'Enter House No.',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               TextField(
                 style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -107,23 +134,30 @@ class _MemberLoginState extends State<MemberLogin> {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: () {
-                      Api().checklogin({
-                        "email": email.text,
-                        "password": password.text,
-                        "isAdmin": false
-                      }).then((res) => {
-                            if (res)
-                              {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DashBoardFinal()))
-                              }
-                          });
+                      if (name.text != "" &&
+                          houseNo.text != "" &&
+                          email.text != "" &&
+                          password.text != "") {
+                        Api().registration({
+                          "name": name.text,
+                          "email": email.text,
+                          "password": password.text,
+                          "isAdmin": false,
+                          "house_no": houseNo.text
+                        }).then((res) => {
+                              if (res == true)
+                                {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AdminDashboard()))
+                                }
+                            });
+                      }
                     },
                     child: const Text(
-                      'Login',
+                      'SignUp',
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),

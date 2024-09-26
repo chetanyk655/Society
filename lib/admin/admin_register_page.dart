@@ -1,16 +1,18 @@
-import 'package:first_app/member/dashboard_final.dart';
+import 'package:first_app/admin/admin_dashboard.dart';
+import 'package:first_app/admin/admin_login.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
-class MemberLogin extends StatefulWidget {
-  const MemberLogin({super.key});
+class AdminRegister extends StatefulWidget {
+  const AdminRegister({super.key});
   @override
   State<StatefulWidget> createState() {
-    return _MemberLoginState();
+    return _AdminRegisterState();
   }
 }
 
-class _MemberLoginState extends State<MemberLogin> {
+class _AdminRegisterState extends State<AdminRegister> {
+  final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   bool _passwordVisible = false;
@@ -25,7 +27,7 @@ class _MemberLoginState extends State<MemberLogin> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        title: const Text('Login',
+        title: const Text('Sign Up',
             style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
       body: Container(
@@ -49,7 +51,7 @@ class _MemberLoginState extends State<MemberLogin> {
                 height: 40,
               ),
               const Text(
-                'Login to your Account',
+                'Create Admin Account',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -57,6 +59,18 @@ class _MemberLoginState extends State<MemberLogin> {
               ),
               const SizedBox(
                 height: 30,
+              ),
+              TextField(
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                controller: name,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    hintText: 'Enter Your Name',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              const SizedBox(
+                height: 20,
               ),
               TextField(
                 style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -107,23 +121,30 @@ class _MemberLoginState extends State<MemberLogin> {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.white),
                     onPressed: () {
-                      Api().checklogin({
-                        "email": email.text,
-                        "password": password.text,
-                        "isAdmin": false
-                      }).then((res) => {
-                            if (res)
-                              {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DashBoardFinal()))
-                              }
-                          });
+                      if (name.text != "" &&
+                          email.text != "" &&
+                          password.text != "") {
+                        Api().registration({
+                          "name": name.text,
+                          "email": email.text,
+                          "password": password.text,
+                          "isAdmin": true,
+                          "house_no": null
+                        }).then((res) => {
+                              if (res == true)
+                                {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AdminLogin(
+                                                given: false,
+                                              )))
+                                }
+                            });
+                      }
                     },
                     child: const Text(
-                      'Login',
+                      'SignUp',
                       style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),

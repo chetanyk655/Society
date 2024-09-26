@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:first_app/services/api.dart';
 
 class NoticePage extends StatelessWidget {
   NoticePage({super.key});
@@ -44,7 +45,11 @@ class NoticePage extends StatelessWidget {
                 const SizedBox(height: 80),
                 ElevatedButton(
                   onPressed: () {
-                    // Logic to send the notice
+                    Api()
+                        .storeNotice({"contents": _notice.text}).then((res) => {
+                              //here you get all result from server
+                              //please notify send request as successful as a modal pop up
+                            });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue, // Button color

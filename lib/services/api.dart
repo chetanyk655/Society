@@ -53,7 +53,13 @@ class Api {
   // ignore: non_constant_identifier_names
   Future checklogin(body) async {
     var url = Uri.parse("$baseUrl/checklogin");
-    final res = await http.post(url, body: body);
+    final res = await http.post(
+      url,
+      body: jsonEncode(body),
+      headers: {
+        'Content-Type': 'application/json', // Specify that you're sending JSON
+      },
+    );
 
     if (res.statusCode == 200) {
       return true;
@@ -62,15 +68,29 @@ class Api {
     }
   }
 
-  Future registration({email, username, password}) async {
+  Future registration(body) async {
     var url = Uri.parse("$baseUrl/registration");
-    print(username);
-    final res = await http.post(url,
-        body: {"username": username, "password": password, "email": email});
-    if (res.statusCode == 201) {
+    final res = await http.post(
+      url,
+      body: jsonEncode(body),
+      headers: {
+        'Content-Type': 'application/json', // Specify that you're sending JSON
+      },
+    );
+    if (res.statusCode == 200) {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future storeNotice(body) async {
+    var url = Uri.parse("$baseUrl/store-notice");
+    final res = await http.post(url, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+    if (res.statusCode == 200) {
+      return res;
     }
   }
 }
