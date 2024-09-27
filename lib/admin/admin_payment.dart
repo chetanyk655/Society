@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AdminPayment extends StatelessWidget {
   AdminPayment({super.key});
   final _amountController = TextEditingController();
-
+  final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final amount = _amountController.text;
@@ -36,7 +36,7 @@ class AdminPayment extends StatelessWidget {
                   ),
                   TextField(
                     style: const TextStyle(color: Colors.white, fontSize: 16),
-                    controller: _amountController,
+                    controller: _emailController,
                     maxLength: 10,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
@@ -94,7 +94,7 @@ class AdminPayment extends StatelessWidget {
                                     backgroundColor:
                                         const Color.fromARGB(255, 38, 38, 38),
                                     title: Text(
-                                      'Conform Amount ₹${_amountController.text}',
+                                      'Confirm Amount ₹${_amountController.text}',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     actions: [
@@ -118,7 +118,7 @@ class AdminPayment extends StatelessWidget {
                                           Navigator.pop(context);
                                         },
                                         child: const Text(
-                                          'conform',
+                                          'confirm',
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),

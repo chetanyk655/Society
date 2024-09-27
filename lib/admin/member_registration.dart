@@ -1,5 +1,5 @@
 import 'package:first_app/admin/admin_dashboard.dart';
-import 'package:first_app/admin/signin_or_signup.dart';
+
 import 'package:first_app/services/api.dart';
 import 'package:flutter/material.dart';
 
@@ -67,7 +67,7 @@ class _MemberRegisterState extends State<MemberRegister> {
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    hintText: 'Enter Your Name',
+                    hintText: 'Enter Member Name',
                     hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
               ),
               const SizedBox(
@@ -91,7 +91,7 @@ class _MemberRegisterState extends State<MemberRegister> {
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    hintText: 'Enter Your Email',
+                    hintText: 'Enter Member Email',
                     hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
               ),
               const SizedBox(
@@ -105,7 +105,7 @@ class _MemberRegisterState extends State<MemberRegister> {
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20))),
-                  hintText: 'Enter your password',
+                  hintText: 'Enter Member Password',
                   hintStyle: const TextStyle(color: Colors.white, fontSize: 16),
                   // Here is key idea
                   suffixIcon: IconButton(

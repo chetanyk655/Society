@@ -1,11 +1,14 @@
 import 'package:first_app/admin/Complaint_and_feedbak_admin.dart';
+import 'package:first_app/admin/admin_dashboard.dart';
 import 'package:first_app/admin/admin_payment.dart';
 import 'package:first_app/admin/facility_booking.dart';
+import 'package:first_app/admin/member_registration.dart';
 //import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/notice.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/market_place/marketPlace_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:first_app/services/api.dart';
 
 class AdminDrawer extends StatelessWidget {
   const AdminDrawer({super.key});
@@ -42,159 +45,162 @@ class AdminDrawer extends StatelessWidget {
               ),
             ),
             Column(
-                children: [
-                  ListTile(
-                leading: const Icon(
-                  Icons.money,
-                  size: 26,
-                  color: Colors.white,
+              children: [
+                ListTile(
+                  leading: const Icon(
+                    Icons.money,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Maintance Payment',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AdminPayment()),
+                    );
+                  },
                 ),
-                title: const Text(
-                  'Maintance Payment',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ListTile(
+                  leading: const Icon(
+                    Icons.message,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Notice',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NoticePage()),
+                    );
+                  },
                 ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AdminPayment()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.message,
-                  size: 26,
-                  color: Colors.white,
+                ListTile(
+                  leading: const Icon(
+                    Icons.message,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Member Sign Up',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MemberRegister()),
+                    );
+                  },
                 ),
-                title: const Text(
-                  'Notice',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ListTile(
+                  leading: const Icon(
+                    Icons.notification_add,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Complaint and Feedback',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ComplaintAndFeedbakAdmin()));
+                  },
                 ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => NoticePage()),
-                  );
-                },
-              ),
-              /*ListTile(
-                leading: const Icon(
-                  Icons.message,
-                  size: 26,
-                  color: Colors.white,
+                ListTile(
+                  leading: const Icon(
+                    Icons.calendar_month,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Facility Booking',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const FacilityBookingAdmin()));
+                  },
                 ),
-                title: const Text(
-                  'Member Sign Up',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ListTile(
+                  leading: const Icon(
+                    Icons.security,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Security',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {},
                 ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MemberRegister()),
-                  );
-                },
-              ),*/
-              ListTile(
-                leading: const Icon(
-                  Icons.notification_add,
-                  size: 26,
-                  color: Colors.white,
+                ListTile(
+                  leading: const Icon(
+                    Icons.shopping_bag_outlined,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Market Place',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MarketplacePage()));
+                  },
                 ),
-                title: const Text(
-                  'Complaint and Feedback',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ListTile(
+                  leading: const Icon(
+                    Icons.contact_mail_sharp,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Contact List',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ContactListDisplay()),
+                    );
+                  },
                 ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ComplaintAndFeedbakAdmin()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.calendar_month,
-                  size: 26,
-                  color: Colors.white,
+                ListTile(
+                  leading: const Icon(
+                    Icons.emergency,
+                    size: 26,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Emergency Contacts',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  onTap: () {},
                 ),
-                title: const Text(
-                  'Facility Booking',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const FacilityBookingAdmin()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.security,
-                  size: 26,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  'Security',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.shopping_bag_outlined,
-                  size: 26,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  'Market Place',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  MarketplacePage()));
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.contact_mail_sharp,
-                  size: 26,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  'Contact List',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ContactListDisplay()),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(
-                  Icons.emergency,
-                  size: 26,
-                  color: Colors.white,
-                ),
-                title: const Text(
-                  'Emergency Contacts',
-                  style: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                onTap: () {},
-              ),
-                ],
-              ),
-            
-            
+              ],
+            ),
           ]),
         ));
   }

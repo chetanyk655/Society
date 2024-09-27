@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Api {
-  static const baseUrl = "https://9b62-45-124-142-96.ngrok-free.app/api";
+  static const baseUrl = "http://192.168.1.7:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
