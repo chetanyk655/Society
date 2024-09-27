@@ -3,12 +3,11 @@ import 'package:flutter/material.dart';
 class AdminPayment extends StatelessWidget {
   AdminPayment({super.key});
   final _amountController = TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
-    
     final amount = _amountController.text;
-    
+
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
@@ -35,7 +34,7 @@ class AdminPayment extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                   TextField(
+                  TextField(
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     controller: _amountController,
                     maxLength: 10,
@@ -48,73 +47,86 @@ class AdminPayment extends StatelessWidget {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16))),
                   ),
+                  TextField(
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    controller: _amountController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                        label: Text('Enter Member Email id',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16))),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        if(amount.isNotEmpty){
-                            showDialog(
-                            
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              backgroundColor: const Color.fromARGB(255, 38, 38, 38),
-                                  title:  const Text('Amount is not entered',style: TextStyle(color: Colors.white),),
-                                  actions: [
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.black),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'Okay',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                        if (amount.isNotEmpty) {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 38, 38, 38),
+                                    title: const Text(
+                                      'Amount is not entered',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.black),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'Okay',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
+                                    ],
+                                  ));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 38, 38, 38),
+                                    title: Text(
+                                      'Conform Amount ₹${_amountController.text}',
+                                      style: TextStyle(color: Colors.white),
                                     ),
-                                    
-                                  ],
-                                ));
-                          }
-                          else{
-                            showDialog(
-                            
-                            context: context,
-                            builder: (ctx) => AlertDialog(
-                              backgroundColor: const Color.fromARGB(255, 38, 38, 38),
-                                  title:  Text('Conform Amount ₹${_amountController.text}',style: TextStyle(color: Colors.white),),
-                                  actions: [
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.black),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'cancel',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                    actions: [
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.black),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'cancel',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: Colors.black),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        'conform',
-                                        style: TextStyle(
-                                          color: Colors.white,
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                            backgroundColor: Colors.black),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          'conform',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ));
-                          }
+                                    ],
+                                  ));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                           overlayColor: Colors.white,

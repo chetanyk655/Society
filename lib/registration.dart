@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 //import 'package:first_app/chetan/dashboard.dart';
 //import 'package:first_app/member/new_dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'package:first_app/login_screen.dart';
-=======
-// import 'package:first_app/chetan/dashboard.dart';
-// //import 'package:first_app/member/new_dashboard.dart';
-// import 'package:flutter/material.dart';
-// import 'package:first_app/services/api.dart';
-// import 'package:first_app/login_screen.dart';
->>>>>>> 21bde243d72b069b089b4b1774c8ad02376069f0
 
 // class Registration extends StatelessWidget {
 //   Registration({super.key});
