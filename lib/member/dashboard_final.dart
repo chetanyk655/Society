@@ -5,7 +5,7 @@ import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:first_app/member/facility_booking_screen.dart';
 import 'package:first_app/member/market_place/marketPlace_screen.dart';
 // import 'package:first_app/member/contant_system/contact_list.dart';
-import 'package:first_app/member/notice.dart';
+import 'package:first_app/member/notice/notice.dart';
 import 'package:first_app/member/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';

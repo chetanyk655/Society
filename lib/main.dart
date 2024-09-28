@@ -1,3 +1,4 @@
+import 'package:first_app/member/notice/notice.dart';
 import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

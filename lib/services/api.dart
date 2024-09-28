@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:first_app/member/current_signed.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.4:2000/api";
+  static const baseUrl = "https://0225-103-51-138-51.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -99,7 +99,7 @@ class Api {
     var url = Uri.parse("$baseUrl/get-notice");
     final res = await http.get(url);
     if (res.statusCode == 200) {
-      return res.body;
+      return res.body.toString();
     } else {
       return null;
     }
