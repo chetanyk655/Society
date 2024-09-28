@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:first_app/services/api.dart';
 
 class AdminPayment extends StatelessWidget {
   AdminPayment({super.key});
@@ -36,7 +39,7 @@ class AdminPayment extends StatelessWidget {
                   ),
                   TextField(
                     style: const TextStyle(color: Colors.white, fontSize: 16),
-                    controller: _emailController,
+                    controller: _amountController,
                     maxLength: 10,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
@@ -49,7 +52,7 @@ class AdminPayment extends StatelessWidget {
                   ),
                   TextField(
                     style: const TextStyle(color: Colors.white, fontSize: 16),
-                    controller: _amountController,
+                    controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                         label: Text('Enter Member Email id',
@@ -115,6 +118,17 @@ class AdminPayment extends StatelessWidget {
                                         style: TextButton.styleFrom(
                                             backgroundColor: Colors.black),
                                         onPressed: () {
+                                          Api().storeBill({
+                                            "amount": double.parse(
+                                                _amountController.text),
+                                            "m_email": _emailController.text,
+                                            "name": null,
+                                            "type": null,
+                                            "file_data": null
+                                          }).then((res) => {
+                                                //get here post response
+                                                print("Done")
+                                              });
                                           Navigator.pop(context);
                                         },
                                         child: const Text(

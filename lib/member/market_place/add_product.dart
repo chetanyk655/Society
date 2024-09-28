@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,12 @@ class _AddProductPageState extends State<AddProductPage> {
   File? _image;
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
+
+  Future<String> encodeImage(File imgFile) async {
+    List<int> imageBytes = await imgFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
 
   Future<void> _pickImage() async {
     final pickedFile =

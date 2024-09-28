@@ -2,6 +2,7 @@ import 'package:first_app/admin/Complaint_and_feedbak_admin.dart';
 import 'package:first_app/admin/admin_dashboard.dart';
 import 'package:first_app/admin/admin_payment.dart';
 import 'package:first_app/admin/facility_booking.dart';
+import 'package:first_app/admin/marketplace_admin.dart';
 import 'package:first_app/admin/member_registration.dart';
 //import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/notice.dart';
@@ -165,7 +166,7 @@ class AdminDrawer extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MarketplacePage()));
+                            builder: (context) => MarketplacePageAdmin()));
                   },
                 ),
                 ListTile(

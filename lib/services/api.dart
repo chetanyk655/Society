@@ -4,9 +4,10 @@ import 'package:first_app/society_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:first_app/member/current_signed.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.7:2000/api";
+  static const baseUrl = "http://192.168.1.4:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -94,14 +95,73 @@ class Api {
     }
   }
 
+  Future getNotice() async {
+    var url = Uri.parse("$baseUrl/get-notice");
+    final res = await http.get(url);
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return null;
+    }
+  }
+
   Future storeComplaintAndFeedback(body) async {
     var url = Uri.parse("$baseUrl/${body['ticket']}");
-    print(body);
     final res = await http.post(url, body: jsonEncode(body), headers: {
       'Content-Type': 'application/json', // Specify that you're sending JSON
     });
     if (res.statusCode == 200) {
       return res;
+    }
+  }
+
+  Future storeBill(body) async {
+    var url = Uri.parse("$baseUrl/bills");
+    final res = await http.post(url, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+    if (res.statusCode == 200) {
+      return res.body;
+    }
+  }
+
+  Future getBill() async {
+    try {
+      final url =
+          Uri.parse('$baseUrl/bills?email=${CurrentSigned.signedEmail}');
+
+      final res = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (res.statusCode == 404) {
+        return jsonDecode(res.body.toString()); // Parse the 404 response body
+      }
+
+      if (res.statusCode == 200) {
+        return jsonDecode(
+            res.body.toString()); // Parse and return the successful response
+      }
+
+      // If the status code is something else, handle it
+      throw Exception('Failed to load bills: ${res.statusCode}');
+    } catch (e) {
+      print('Error fetching bills: $e');
+      return null; // Return null or handle error properly
+    }
+  }
+
+  Future<void> uploadImage(String base64Image) async {
+    final response = await http.post(
+      Uri.parse('http://your-backend-url/upload'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode({'image': base64Image}),
+    );
+
+    if (response.statusCode == 200) {
+      print('Image uploaded successfully');
+    } else {
+      print('Failed to upload image');
     }
   }
 }

@@ -8,6 +8,8 @@ import 'package:first_app/member/market_place/marketPlace_screen.dart';
 import 'package:first_app/member/notice.dart';
 import 'package:first_app/member/payment.dart';
 import 'package:flutter/material.dart';
+import 'package:first_app/services/api.dart';
+import 'dart:convert';
 
 class DashBoardFinal extends StatelessWidget {
   const DashBoardFinal({super.key});
@@ -46,12 +48,14 @@ class DashBoardFinal extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PaymentMember(),
-                    ),
-                  );
+                  Api().getBill().then((res) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PaymentMember(),
+                          ),
+                        )
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -96,12 +100,15 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NoticeMember(),
-                    ),
-                  );
+                  Api().getNotice().then((res) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NoticeMember(response: res.toString()),
+                          ),
+                        )
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -123,11 +130,10 @@ class DashBoardFinal extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const FacilityBookingScreen(),
-                    ),
-                  );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FacilityBookingScreen(),
+                      ));
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),

@@ -1,6 +1,7 @@
 import 'package:first_app/member/dashboard_final.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
+import 'package:first_app/member/current_signed.dart';
 
 class MemberLogin extends StatefulWidget {
   const MemberLogin({super.key});
@@ -13,6 +14,7 @@ class MemberLogin extends StatefulWidget {
 class _MemberLoginState extends State<MemberLogin> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+
   bool _passwordVisible = false;
   @override
   void initState() {
@@ -114,6 +116,7 @@ class _MemberLoginState extends State<MemberLogin> {
                       }).then((res) => {
                             if (res)
                               {
+                                CurrentSigned.signedEmail = email.text,
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
