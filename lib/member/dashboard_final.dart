@@ -7,6 +7,8 @@ import 'package:first_app/member/market_place/marketPlace_screen.dart';
 // import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/notice/notice.dart';
 import 'package:first_app/member/payment.dart';
+import 'package:first_app/member/security_call.dart';
+import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'dart:convert';
@@ -19,12 +21,23 @@ class DashBoardFinal extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
           automaticallyImplyLeading: false,
           title: const Text(
             'Menu Bar',
             style: TextStyle(color: Colors.white),
           ),
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SelectionScreen(),
+                          ),
+                        );
+            }, icon: const Icon(Icons.logout)),
+          ],
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -79,7 +92,14 @@ class DashBoardFinal extends StatelessWidget {
                     )),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SecurityApp(),
+                          ),
+                        );
+                },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(

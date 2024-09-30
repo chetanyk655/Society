@@ -1,4 +1,5 @@
 import 'package:first_app/admin/admin_drawer.dart';
+import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 
 class AdminDashboard extends StatelessWidget {
@@ -15,6 +16,16 @@ class AdminDashboard extends StatelessWidget {
           title: const Text('Admin Controls',
               style: TextStyle(color: Colors.white)),
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          actions: [
+            IconButton(onPressed: (){
+              Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SelectionScreen(),
+                          ),
+                        );
+            }, icon: const Icon(Icons.logout)),
+          ],
         ),
         drawer: const AdminDrawer(),
         body: Container(
