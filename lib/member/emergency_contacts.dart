@@ -1,137 +1,127 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class EmergencyContacts extends StatefulWidget {
-  const EmergencyContacts({super.key});
-
+class EmergencyContact extends StatefulWidget {
+  const EmergencyContact({super.key});
   @override
-  State<EmergencyContacts> createState() {
-    return _EmergencyContactState();
+  State<StatefulWidget> createState() {
+    return _EmergencyContact();
   }
 }
 
-class _EmergencyContactState extends State<EmergencyContacts> {
+class _EmergencyContact extends State<EmergencyContact> {
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    var status = await Permission.phone.request();
+    if (status.isGranted) {
+      final Uri phoneUrl = Uri(scheme: 'tel', path: phoneNumber);
+      try {
+        if (await canLaunch(phoneUrl.toString())) {
+          await launch(phoneUrl.toString());
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Could not launch call")),
+          );
+        }
+      } catch (e) {
+        print("Error launching URL: $e"); // Log the error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Phone call permission denied")),
+      );
+    }
+  }
+
   @override
-  Widget build(context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: 
-           Center(
-            child: Column(children: [
-              const SizedBox(
-                height: 20,
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          title: const Text('Emergency Contacts',
+              style: TextStyle(color: Colors.white, fontSize: 18)),
+        ),
+        body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 0, 0, 0),
+                  Color.fromARGB(255, 29, 28, 28),
+                  Color.fromARGB(255, 0, 0, 0),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              Container(
-                width: 300,
-                padding: const EdgeInsets.only(right: 310),
-                alignment: Alignment.center,
-                child: IconButton(
-                  alignment: Alignment.centerLeft,
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    'assets/images/left-arrow-back-svgrepo-com.svg', // Path to your SVG asset
-                    width: 25.0, // Set the width of the SVG icon
-                    height: 25.0,
-                    // Set the height of the SVG icon
-                  ),
-                  iconSize: 25.0,
-                ),
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              Text(
-                "EMERGENCY CONTACTS",
-                textAlign: TextAlign.center,
-                style: GoogleFonts.nunito(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
+            ),
+            child: Center(
+              child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(bottom: 25)),
-                        const Icon(
-                          Icons.local_police_sharp,
-                          size: 50,
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _makePhoneCall('108');
+                        },
+                        icon: const Icon(
+                          Icons.emergency_outlined,
+                          color: Colors.white,
                         ),
-                        const Padding(padding: EdgeInsets.only(bottom: 25)),
-                        const Icon(
-                          Icons.fire_truck,
-                          size: 50,
-                        ),
-                        const Padding(padding: EdgeInsets.only(bottom: 25)),
-                        SvgPicture.asset(
-                          'assets/ambulance-svgrepo-com.svg',
-                          width: 25,
-                          height: 25,
-                        ),
-                        const Padding(padding: EdgeInsets.only(bottom: 25)),
-                      ],
-                    ),
+                        iconSize: 40,
+                      ),
+                      const Text('Ambulance',
+                      style: TextStyle(color: Colors.white, fontSize: 24)),
+                    ],
                   ),
                   const SizedBox(
-                    width: 10,
+                    height: 20,
                   ),
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 115, vertical: 10),
+                      IconButton(
+                        onPressed: () {
+                          _makePhoneCall('100');
+                        },
+                        icon: const Icon(
+                          Icons.shield_rounded,
+                          color: Colors.white,
                         ),
-                        child: const Text(
-                          style: TextStyle(
-                            fontSize: 26,
-                          ),
-                          "POLICE",
-                        ),
+                        iconSize: 40,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 55, bottom: 55),
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 100, vertical: 10),
-                          ),
-                          child: const Text(
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                              "FIRE TRUCK"),
+                      const Text('Police',
+                      style: TextStyle(color: Colors.white, fontSize: 24)),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          _makePhoneCall('101');
+                        },
+                        icon: const Icon(
+                          Icons.fire_truck_outlined,
+                          color: Colors.white,
                         ),
+                        iconSize: 40,
                       ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 95, vertical: 10),
-                        ),
-                        child: const Text(
-                          "AMBULANCE",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
+                      const Text('Fire Brigade',
+                      style: TextStyle(color: Colors.white, fontSize: 24)),
                     ],
                   ),
                 ],
-              )
-            ]),
-          ),
-        ),
-      
-    );
+              ),
+            )));
   }
 }
