@@ -129,6 +129,8 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  Api().getSingleFacility().then((res) => print(res));
+                  Api().getFacilities().then((res) => print(res));
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -184,12 +186,26 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MarketplacePage(),
-                    ),
-                  );
+                  Api().getProducts().then((res) => {
+                        if (res.statusCode == 200)
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MarketplacePage(res),
+                              ),
+                            )
+                          }
+                        else
+                          {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MarketplacePage(res),
+                              ),
+                            )
+                          }
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -212,6 +228,7 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
+                  Api().getContacts().then((res) => {print(res)});
                   Navigator.push(
                     context,
                     MaterialPageRoute(

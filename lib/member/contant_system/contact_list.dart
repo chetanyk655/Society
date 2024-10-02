@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class ContactListDisplay extends StatefulWidget {
   const ContactListDisplay({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _ContactListDisplayState();
@@ -59,9 +60,7 @@ class _ContactListDisplayState extends State<ContactListDisplay> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white
-          ),
+          iconTheme: const IconThemeData(color: Colors.white),
           title: const Text(
             'Contact List',
             style: TextStyle(color: Colors.white, fontSize: 16),
@@ -78,9 +77,10 @@ class _ContactListDisplayState extends State<ContactListDisplay> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            
             children: [
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 40,
+              ),
               Expanded(
                 child: ListedView(
                   displayList: contactList,
@@ -90,13 +90,11 @@ class _ContactListDisplayState extends State<ContactListDisplay> {
               ElevatedButton(
                 onPressed: _openAddContactOverlay,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 135, 124, 25)
-                ),
+                    backgroundColor: const Color.fromARGB(255, 135, 124, 25)),
                 child: const Text(
                   'Add new contact',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
-                
               ),
               const SizedBox(height: 30)
             ],

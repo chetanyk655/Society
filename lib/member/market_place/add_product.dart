@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:first_app/services/api.dart';
+import 'package:http/http.dart' as http;
 
 class AddProductPage extends StatefulWidget {
   @override
@@ -12,21 +14,19 @@ class _AddProductPageState extends State<AddProductPage> {
   File? _image;
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
-
-  Future<String> encodeImage(File imgFile) async {
-    List<int> imageBytes = await imgFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
-  }
-
+  final _descController = TextEditingController();
+  XFile? image2;
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    final ImagePicker _picker = ImagePicker();
 
-    if (pickedFile != null) {
+    image2 = await _picker.pickImage(source: ImageSource.camera);
+
+    if (image2 != null) {
+      File imgFile = File(image2!.path);
       setState(() {
-        _image = File(pickedFile.path);
+        _image = File(image2!.path);
       });
+      // Now you can send imgFile to your backend
     }
   }
 
@@ -64,12 +64,22 @@ class _AddProductPageState extends State<AddProductPage> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: 'Price'),
             ),
+            TextField(
+              controller: _descController,
+              decoration: const InputDecoration(labelText: 'Description'),
+            ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 if (_image != null &&
                     _nameController.text.isNotEmpty &&
                     _priceController.text.isNotEmpty) {
+                  Api().uploadproduct({
+                    "name": _nameController.text,
+                    "price": _priceController.text.toString(),
+                    "desc": _descController.text,
+                    "filename": _nameController.text,
+                  }, image2!);
                   Navigator.pop(context, {
                     'image': _image,
                     'name': _nameController.text,

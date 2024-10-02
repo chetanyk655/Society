@@ -1,7 +1,12 @@
 import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
 class MarketplacePage extends StatefulWidget {
+  MarketplacePage(this.response, {super.key});
+  String response;
+
   @override
   _MarketplacePageState createState() => _MarketplacePageState();
 }
@@ -16,12 +21,13 @@ class _MarketplacePageState extends State<MarketplacePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('Marketplace',style: TextStyle(color: Colors.white, fontSize: 18)),
+        title: const Text('Marketplace',
+            style: TextStyle(color: Colors.white, fontSize: 18)),
       ),
       body: items.isEmpty
-          ? const Center(child:
-           Text('No items added yet',style: TextStyle(color: Colors.white, fontSize: 18))
-           )
+          ? const Center(
+              child: Text('No items added yet',
+                  style: TextStyle(color: Colors.white, fontSize: 18)))
           : ListView.builder(
               itemCount: items.length,
               itemBuilder: (context, index) {
@@ -42,18 +48,16 @@ class _MarketplacePageState extends State<MarketplacePage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      
                       decoration: BoxDecoration(
-                        gradient:const LinearGradient(
-                            colors: [
-                              
-                              Color.fromARGB(255, 0, 0, 0),
-                              Color.fromARGB(255, 29, 28, 28),
-                              Color.fromARGB(255, 0, 0, 0),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color.fromARGB(255, 0, 0, 0),
+                            Color.fromARGB(255, 29, 28, 28),
+                            Color.fromARGB(255, 0, 0, 0),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
@@ -89,14 +93,13 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                 Text(
                                   items[index]['name'],
                                   style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white
-                                  ),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  'Price: \$${items[index]['price']}',
+                                  'Price: \₹${items[index]['price']}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey[600],
