@@ -1,26 +1,45 @@
 import 'dart:convert';
 
+import 'package:first_app/member/current_signed.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
 class PaymentMember extends StatefulWidget {
-  const PaymentMember({super.key});
+  const PaymentMember({super.key,required this.money});
+  final String money;
+  
   @override
   State<StatefulWidget> createState() {
-    return _PaymentMember();
+     
+
+    return _PaymentMember(amount: money);
   }
 }
 
 class _PaymentMember extends State<PaymentMember> {
-  int amountDue = 1000;
+  _PaymentMember({required this.amount});
+  String amount;
+  String cash='10';
   void _payment() {
+    Api().deleteBill({
+      'email':CurrentSigned.signedEmail
+    });
     setState(() {
-      amountDue = 0;
+      cash='0';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> parsedJson = jsonDecode(amount);
+    String cash1 ;
+    if(parsedJson['response']['status_code']==200){
+      cash1 = parsedJson["response"]![0]["bill_amount"].toString();
+    }
+    else{
+      cash1='0';
+    }
+    
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
@@ -74,7 +93,7 @@ class _PaymentMember extends State<PaymentMember> {
                         ),
                         Center(
                             child: Text(
-                          '₹ $amountDue',
+                          '₹ $cash1',
                           style: const TextStyle(
                               color: Colors.white, fontSize: 35),
                         )),
@@ -103,5 +122,3 @@ class _PaymentMember extends State<PaymentMember> {
             )));
   }
 }
-
-//const Center(child:  Text('NO NOTICE',style: TextStyle(color: Colors.white, fontSize: 24)))

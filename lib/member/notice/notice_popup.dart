@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 
-class NoticeMember extends StatelessWidget {
-  NoticeMember({super.key, required this.response});
-  String response;
+class NoticePopup extends StatelessWidget{
+  const NoticePopup({super.key,required this.content,required this.date});
+  final String content;
+  final String date;
   @override
   Widget build(BuildContext context) {
-    print(jsonDecode(response)["response"][0]["contents"]);
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-          title: const Text('Notice',
+          title: const Text('Details',
               style: TextStyle(color: Colors.white, fontSize: 18)),
         ),
         body: Container(
@@ -26,8 +25,21 @@ class NoticeMember extends StatelessWidget {
                 end: Alignment.bottomCenter,
               ),
             ),
-            child: const Center(
-                child: Text('NO NOTICE',
-                    style: TextStyle(color: Colors.white, fontSize: 24)))));
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                  
+                  children: [
+                    Text(date,style: const TextStyle(color: Colors.white, fontSize: 18)),
+                    const SizedBox(height: 30,),
+                    Text(content,style: const TextStyle(color: Colors.white, fontSize: 18)),
+                    
+                  ],
+                ),
+              ),
+            ),
+             ));
   }
+  
 }

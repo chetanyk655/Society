@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.4:2000/api";
+  static const baseUrl = "https://2ca9-103-51-138-51.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -157,12 +157,11 @@ class Api {
       });
 
       if (res.statusCode == 404) {
-        return jsonDecode(res.body.toString()); // Parse the 404 response body
+        return res.body; // Parse the 404 response body
       }
 
       if (res.statusCode == 200) {
-        return jsonDecode(
-            res.body.toString()); // Parse and return the successful response
+        return res.body; // Parse and return the successful response
       }
 
       // If the status code is something else, handle it
