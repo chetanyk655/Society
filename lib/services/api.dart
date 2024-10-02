@@ -5,9 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:first_app/member/current_signed.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "https://0225-103-51-138-51.ngrok-free.app/api";
+  static const baseUrl = "https://2ca9-103-51-138-51.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -27,6 +28,7 @@ class Api {
 
   getDetails() async {
     var url = Uri.parse("${baseUrl}getdetails");
+
     final res = await http.get(url);
     try {
       if (res.statusCode == 200) {
@@ -99,7 +101,7 @@ class Api {
     var url = Uri.parse("$baseUrl/get-notice");
     final res = await http.get(url);
     if (res.statusCode == 200) {
-      return res.body.toString();
+      return res.body;
     } else {
       return null;
     }
@@ -135,12 +137,12 @@ class Api {
       });
 
       if (res.statusCode == 404) {
-        return jsonDecode(res.body.toString()); // Parse the 404 response body
+        return res.body; // Parse the 404 response body
       }
 
       if (res.statusCode == 200) {
-        return jsonDecode(
-            res.body.toString()); // Parse and return the successful response
+        return 
+            res.body; // Parse and return the successful response
       }
 
       // If the status code is something else, handle it
@@ -151,17 +153,125 @@ class Api {
     }
   }
 
-  Future<void> uploadImage(String base64Image) async {
-    final response = await http.post(
-      Uri.parse('http://your-backend-url/upload'),
-      headers: {"Content-Type": "application/json"},
-      body: json.encode({'image': base64Image}),
+  // Update the uploadproduct method in api.dart
+  Future<void> uploadproduct(Map<String, String> body, XFile image) async {
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse(
+          'http://192.168.1.4:2000/api/marketplace'), // Update with your server URL
     );
 
+    // Add the image file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath('image', image.path),
+    );
+
+    // Add other fields from the body map
+    request.fields['p_name'] = body['name']!; // Product name
+    request.fields['price'] = body['price']!; // Price
+    request.fields['descp'] = body['desc']!; // Description
+    request.fields['filename'] = body['filename']!; // Filename
+
+    // Send the request
+    final response = await request.send();
+
     if (response.statusCode == 200) {
-      print('Image uploaded successfully');
+      final responseData = await response.stream.bytesToString();
+      print('Upload success: $responseData');
     } else {
-      print('Failed to upload image');
+      print('Upload failed: ${response.statusCode}');
+    }
+  }
+
+  Future getProducts() async {
+    var url = Uri.parse("$baseUrl/marketplace");
+    final res = await http.post(url, headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      return "Can't get products";
+    }
+  }
+
+  Future uploadFacility(body) async {
+    var url = Uri.parse("$baseUrl/facility");
+    final res = await http.post(url, body: body);
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future getSingleFacility() async {
+    var url = Uri.parse(
+        "$baseUrl/facility/singleFacility?email=${CurrentSigned.signedEmail}");
+    final res = await http.get(url, headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return false;
+    }
+  }
+
+  Future getFacilities() async {
+    var url = Uri.parse("$baseUrl/facility");
+    final res = await http.get(url, headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return false;
+    }
+  }
+
+  Future saveContact(body) async {
+    var url = Uri.parse("$baseUrl/contact");
+    final res = await http.post(url, body: body);
+
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      return false;
+    }
+  }
+
+  Future getContacts() async {
+    var url = Uri.parse("$baseUrl/contact");
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      return false;
+    }
+  }
+
+  Future deleteContacts(body) async {
+    var url = Uri.parse("$baseUrl/contact");
+    final res = await http.delete(url, body: body);
+
+    if (res.statusCode == 200) {
+      return res;
+    } else {
+      return false;
+    }
+  }
+  Future deleteBill(body) async {
+    var url = Uri.parse("$baseUrl/bills");
+    final res = await http.delete(url, body: jsonEncode(body), headers: {
+      'Content-Type': 'application/json', // Specify that you're sending JSON
+    });
+    if (res.statusCode == 200) {
+      return res.body;
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:first_app/admin/facility_booking.dart';
 import 'package:first_app/member/Complaint_and_feedback.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
+import 'package:first_app/member/emergency_contacts.dart';
 import 'package:first_app/member/facility_booking_screen.dart';
 import 'package:first_app/member/market_place/marketPlace_screen.dart';
 // import 'package:first_app/member/contant_system/contact_list.dart';
@@ -61,14 +62,18 @@ class DashBoardFinal extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
+                 
+
                   Api().getBill().then((res) => {
+                        
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PaymentMember(),
+                            builder: (context) => PaymentMember(money: res.toString(),),
                           ),
                         )
-                      });
+                      }
+                    );
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -259,7 +264,14 @@ class DashBoardFinal extends StatelessWidget {
                         style: TextStyle(color: Colors.white, fontSize: 18))),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EmergencyContact(),
+                          ),
+                        );
+                },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
                 child: Container(

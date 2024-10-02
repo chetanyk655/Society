@@ -93,12 +93,7 @@ class _SecurityPageState extends State<SecurityPage> {
       appBar: AppBar(
         title: const Text("SECURITY", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       backgroundColor: Colors.black,
       body: Padding(

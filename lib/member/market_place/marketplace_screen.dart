@@ -113,7 +113,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         onPressed: () async {
           final newItem = await Navigator.push(
             context,

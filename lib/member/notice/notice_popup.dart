@@ -25,13 +25,19 @@ class NoticePopup extends StatelessWidget{
                 end: Alignment.bottomCenter,
               ),
             ),
-            child: Column(
-              children: [
-                Text(date,style: const TextStyle(color: Colors.white, fontSize: 18)),
-                const SizedBox(height: 30,),
-                Text(content,style: const TextStyle(color: Colors.white, fontSize: 18)),
-                
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Center(
+                child: Column(
+                  
+                  children: [
+                    Text(date,style: const TextStyle(color: Colors.white, fontSize: 18)),
+                    const SizedBox(height: 30,),
+                    Text(content,style: const TextStyle(color: Colors.white, fontSize: 18)),
+                    
+                  ],
+                ),
+              ),
             ),
              ));
   }
