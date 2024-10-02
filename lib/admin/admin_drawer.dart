@@ -164,10 +164,16 @@ class AdminDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MarketplacePageAdmin()));
+                    Api().getProducts().then((res) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MarketplacePageAdmin(
+                                response: res,
+                              ),
+                            ),
+                          )
+                        });
                   },
                 ),
                 ListTile(
@@ -201,11 +207,11 @@ class AdminDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EmergencyContact(),
-                          ),
-                        );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmergencyContact(),
+                      ),
+                    );
                   },
                 ),
               ],

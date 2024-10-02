@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "https://2ca9-103-51-138-51.ngrok-free.app/api";
+  static const baseUrl = "http://192.168.1.4:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -107,21 +107,37 @@ class Api {
     }
   }
 
-  Future storeComplaintAndFeedback(body) async {
-    var url = Uri.parse("$baseUrl/${body['ticket']}");
-    final res = await http.post(url, body: jsonEncode(body), headers: {
-      'Content-Type': 'application/json', // Specify that you're sending JSON
-    });
-    if (res.statusCode == 200) {
-      return res;
+  Future storeComplaintAndFeedback(
+      Map<String, String> body, XFile image) async {
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse("$baseUrl/${body['ticket']}"), // Update with your server URL
+    );
+
+    print(body['ticket']);
+
+    // Add the image file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath('image', image.path),
+    );
+
+    request.fields['message'] = body['message']!;
+    request.fields['filename'] = body['filename']!;
+
+    // Send the request
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.bytesToString();
+      print('Upload success: $responseData');
+    } else {
+      print('Upload failed: ${response.statusCode}');
     }
   }
 
   Future storeBill(body) async {
     var url = Uri.parse("$baseUrl/bills");
-    final res = await http.post(url, body: jsonEncode(body), headers: {
-      'Content-Type': 'application/json', // Specify that you're sending JSON
-    });
+    final res = await http.post(url, body: body);
     if (res.statusCode == 200) {
       return res.body;
     }
@@ -129,9 +145,7 @@ class Api {
 
   Future storeMaintenance(body) async {
     var url = Uri.parse("$baseUrl/bills/maintenance");
-    final res = await http.post(url, body: jsonEncode(body), headers: {
-      'Content-Type': 'application/json', // Specify that you're sending JSON
-    });
+    final res = await http.post(url, body: body);
     if (res.statusCode == 200) {
       return res.body;
     }
@@ -139,9 +153,7 @@ class Api {
 
   Future updateBillStatus(body) async {
     var url = Uri.parse("$baseUrl/bills/paydone");
-    final res = await http.post(url, body: jsonEncode(body), headers: {
-      'Content-Type': 'application/json', // Specify that you're sending JSON
-    });
+    final res = await http.post(url, body: body);
     if (res.statusCode == 200) {
       return res.body;
     }
@@ -151,7 +163,7 @@ class Api {
     try {
       final url =
           Uri.parse('$baseUrl/bills?email=${CurrentSigned.signedEmail}');
-
+      print(url);
       final res = await http.get(url, headers: {
         'Content-Type': 'application/json',
       });
@@ -214,14 +226,14 @@ class Api {
 
   Future getProducts() async {
     var url = Uri.parse("$baseUrl/marketplace");
-    final res = await http.post(url, headers: {
+    final res = await http.get(url, headers: {
       'Content-Type': 'application/json', // Specify that you're sending JSON
     });
 
     if (res.statusCode == 200) {
-      return res;
+      return res.body;
     } else {
-      return "Can't get products";
+      return res.body;
     }
   }
 

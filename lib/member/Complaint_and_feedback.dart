@@ -10,28 +10,25 @@ class ComplaintAndFeedback extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _ComplaintAndFeedback();
   }
-  
 }
 
-class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
+class _ComplaintAndFeedback extends State<ComplaintAndFeedback> {
   File? _image;
+  XFile? image2;
   final TextEditingController _message = TextEditingController();
-  Future<String> encodeImage(File imgFile) async {
-    List<int> imageBytes = await imgFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
-  }
-
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    final ImagePicker _picker = ImagePicker();
 
-    if (pickedFile != null) {
+    image2 = await _picker.pickImage(source: ImageSource.camera);
+
+    if (image2 != null) {
+      File imgFile = File(image2!.path);
       setState(() {
-        _image = File(pickedFile.path);
+        _image = File(image2!.path);
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +52,6 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
           ),
           child: Center(
             child: Padding(
-            
               padding: const EdgeInsets.all(16.0),
               child: SingleChildScrollView(
                 child: Column(
@@ -70,7 +66,8 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: _image == null
-                            ? Icon(Icons.camera_alt, size: 50, color: Colors.grey)
+                            ? Icon(Icons.camera_alt,
+                                size: 50, color: Colors.grey)
                             : Image.file(_image!, fit: BoxFit.cover),
                       ),
                     ),
@@ -90,8 +87,11 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        Api().storeComplaintAndFeedback(
-                            {"message": _message.text, "ticket": 'feedbacks'});
+                        Api().storeComplaintAndFeedback({
+                          "message": _message.text,
+                          "ticket": 'feedbacks',
+                          "filename": image2!.name
+                        }, image2!);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.purple, // Button color
@@ -107,8 +107,11 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
                     const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
-                        Api().storeComplaintAndFeedback(
-                            {"message": _message.text, "ticket": "complaints"});
+                        Api().storeComplaintAndFeedback({
+                          "message": _message.text,
+                          "ticket": "complaints",
+                          "filename": image2!.name
+                        }, image2!);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.purple, // Button color
@@ -127,7 +130,5 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback>{
             ),
           ),
         ));
-    
   }
 }
-

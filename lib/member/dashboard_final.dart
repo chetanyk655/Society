@@ -4,7 +4,7 @@ import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:first_app/member/emergency_contacts.dart';
 import 'package:first_app/member/facility_booking_screen.dart';
-import 'package:first_app/member/market_place/marketPlace_screen.dart';
+import 'package:first_app/member/market_place/marketplace_screen.dart';
 // import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/notice/notice.dart';
 import 'package:first_app/member/payment.dart';
@@ -30,14 +30,16 @@ class DashBoardFinal extends StatelessWidget {
           ),
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           actions: [
-            IconButton(onPressed: (){
-              Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SelectionScreen(),
-                          ),
-                        );
-            }, icon: const Icon(Icons.logout)),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SelectionScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.logout)),
           ],
         ),
         body: Container(
@@ -62,18 +64,16 @@ class DashBoardFinal extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                 
-
                   Api().getBill().then((res) => {
-                        
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PaymentMember(money: res.toString(),),
+                            builder: (context) => PaymentMember(
+                              bill: res,
+                            ),
                           ),
                         )
-                      }
-                    );
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -99,11 +99,11 @@ class DashBoardFinal extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SecurityApp(),
-                          ),
-                        );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SecurityApp(),
+                    ),
+                  );
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
@@ -212,24 +212,14 @@ class DashBoardFinal extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Api().getProducts().then((res) => {
-                        if (res.statusCode == 200)
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MarketplacePage(res),
-                              ),
-                            )
-                          }
-                        else
-                          {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MarketplacePage(res),
-                              ),
-                            )
-                          }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MarketplacePage(
+                              response: res,
+                            ),
+                          ),
+                        )
                       });
                 },
                 splashColor: Theme.of(context).primaryColor,
@@ -283,11 +273,11 @@ class DashBoardFinal extends StatelessWidget {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EmergencyContact(),
-                          ),
-                        );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EmergencyContact(),
+                    ),
+                  );
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),

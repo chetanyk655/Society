@@ -1,45 +1,53 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:first_app/member/current_signed.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
 class PaymentMember extends StatefulWidget {
-  const PaymentMember({super.key,required this.money});
-  final String money;
-  
+  const PaymentMember({super.key, required this.bill});
+  final String bill;
+
   @override
   State<StatefulWidget> createState() {
-     
-
-    return _PaymentMember(amount: money);
+    return _PaymentMember(amount: bill);
   }
 }
 
 class _PaymentMember extends State<PaymentMember> {
   _PaymentMember({required this.amount});
   String amount;
-  String cash='10';
+  int status = 0;
+  Map<String, dynamic> parsedJson = {};
+  String cashToDisplayed = "No Bills on due!!";
   void _payment() {
-    Api().deleteBill({
-      'email':CurrentSigned.signedEmail
+    Api().storeMaintenance({
+      "bid": parsedJson['response'][0]['b_id'].toString(),
+      "email": parsedJson['response'][0]['m_email'],
+      "amount": parsedJson['response'][0]['bill_amount'].toString()
     });
+    Api().updateBillStatus({
+      "bid": parsedJson['response'][0]['b_id'].toString(),
+    });
+    Api().deleteBill({"email": parsedJson['response'][0]['m_email']});
     setState(() {
-      cash='0';
+      cashToDisplayed = 'No Bills on due!!';
+      parsedJson['status_code'] = -1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> parsedJson = jsonDecode(amount);
-    String cash1 ;
-    if(parsedJson['response']['status_code']==200){
-      cash1 = parsedJson["response"]![0]["bill_amount"].toString();
+    if (status == 0) {
+      parsedJson = jsonDecode(amount);
     }
-    else{
-      cash1='0';
+    status = parsedJson['status_code'];
+
+    if (status == 200) {
+      cashToDisplayed = parsedJson['response'][0]["bill_amount"].toString();
     }
-    
+
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
@@ -93,7 +101,7 @@ class _PaymentMember extends State<PaymentMember> {
                         ),
                         Center(
                             child: Text(
-                          '₹ $cash1',
+                          '₹ $cashToDisplayed',
                           style: const TextStyle(
                               color: Colors.white, fontSize: 35),
                         )),
@@ -110,7 +118,9 @@ class _PaymentMember extends State<PaymentMember> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 58, 233, 64)),
-                      onPressed: _payment,
+                      onPressed: cashToDisplayed == "No Bills on due!!"
+                          ? () {}
+                          : _payment,
                       child: const Text(
                         'Pay',
                         style: TextStyle(color: Colors.white, fontSize: 20),

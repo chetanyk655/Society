@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:first_app/member/market_place/marketplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:first_app/services/api.dart';
@@ -18,9 +20,7 @@ class _AddProductPageState extends State<AddProductPage> {
   XFile? image2;
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
-
     image2 = await _picker.pickImage(source: ImageSource.camera);
-
     if (image2 != null) {
       File imgFile = File(image2!.path);
       setState(() {
@@ -80,11 +80,16 @@ class _AddProductPageState extends State<AddProductPage> {
                     "desc": _descController.text,
                     "filename": _nameController.text,
                   }, image2!);
-                  Navigator.pop(context, {
-                    'image': _image,
-                    'name': _nameController.text,
-                    'price': _priceController.text,
-                  });
+                  Api().getProducts().then((res) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MarketplacePage(
+                              response: res,
+                            ),
+                          ),
+                        )
+                      });
                 }
               },
               child: Text('Add Product'),

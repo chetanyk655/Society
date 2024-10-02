@@ -1,13 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 class ViewProductPage extends StatelessWidget {
-  final File image;
+  final Uint8List image;
   final String name;
   final String price;
+  final String desc;
 
   ViewProductPage(
-      {required this.image, required this.name, required this.price});
+      {required this.image,
+      required this.name,
+      required this.price,
+      required this.desc});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +32,8 @@ class ViewProductPage extends StatelessWidget {
               height: 300,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.file(
-                  image,
+                child: Image.memory(
+                  image as Uint8List,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -43,10 +49,26 @@ class ViewProductPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Price: \$${price}',
+              'Price: \₹${price}',
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Description:',
+              style: TextStyle(
+                fontSize: 24,
+                color: const Color.fromARGB(255, 15, 13, 13),
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              '${desc}',
+              style: TextStyle(
+                fontSize: 16,
+                color: const Color.fromARGB(255, 5, 3, 3),
               ),
             ),
           ],

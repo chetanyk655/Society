@@ -1,17 +1,38 @@
+import 'dart:convert';
+
 import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class MarketplacePageAdmin extends StatefulWidget {
+  MarketplacePageAdmin({super.key, this.response});
+  String? response;
   @override
-  _MarketplacePageAdminState createState() => _MarketplacePageAdminState();
+  _MarketplacePageAdminState createState() =>
+      _MarketplacePageAdminState(response: response);
 }
 
 class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
+  _MarketplacePageAdminState({this.response});
+  String? response;
+  Map<String, dynamic> parsedJson = {};
   List<Map<String, dynamic>> items = [];
 
   @override
   Widget build(BuildContext context) {
+    parsedJson = jsonDecode(response!);
+    if (parsedJson['status_code'] == 200) {
+      for (int i = 0; i < parsedJson['total_prod']; i++) {
+        items.add({
+          "image": base64Decode(
+              parsedJson['response']['products'][i]['image'].split(',').last),
+          "name": parsedJson['response']['products'][i]['p_name'],
+          "price": parsedJson['response']['products'][i]['price'].toString(),
+          "desc": parsedJson['response']['products'][i]['descp']
+        });
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -34,10 +55,10 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ViewProductPage(
-                          image: items[index]['image'],
-                          name: items[index]['name'],
-                          price: items[index]['price'],
-                        ),
+                            image: items[index]['image'],
+                            name: items[index]['name'],
+                            price: items[index]['price'],
+                            desc: items[index]['desc']),
                       ),
                     );
                   },
@@ -75,7 +96,7 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                               height: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.file(
+                                child: Image.memory(
                                   items[index]['image'],
                                   fit: BoxFit.cover,
                                 ),
@@ -95,7 +116,7 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  'Price: \$${items[index]['price']}',
+                                  'Price: \₹${items[index]['price']}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey[600],
@@ -111,6 +132,22 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                 );
               },
             ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        onPressed: () async {
+          final newItem = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProductPage()),
+          );
+
+          if (newItem != null) {
+            setState(() {
+              items.add(newItem);
+            });
+          }
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

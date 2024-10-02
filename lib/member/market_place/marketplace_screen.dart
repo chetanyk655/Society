@@ -1,21 +1,38 @@
+import 'dart:convert';
+
 import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class MarketplacePage extends StatefulWidget {
-  MarketplacePage(this.response, {super.key});
-  String response;
-
+  MarketplacePage({super.key, this.response});
+  String? response;
   @override
-  _MarketplacePageState createState() => _MarketplacePageState();
+  _MarketplacePageState createState() =>
+      _MarketplacePageState(response: response);
 }
 
 class _MarketplacePageState extends State<MarketplacePage> {
+  _MarketplacePageState({this.response});
+  String? response;
+  Map<String, dynamic> parsedJson = {};
   List<Map<String, dynamic>> items = [];
 
   @override
   Widget build(BuildContext context) {
+    parsedJson = jsonDecode(response!);
+    if (parsedJson['status_code'] == 200) {
+      for (int i = 0; i < parsedJson['total_prod']; i++) {
+        items.add({
+          "image": base64Decode(
+              parsedJson['response']['products'][i]['image'].split(',').last),
+          "name": parsedJson['response']['products'][i]['p_name'],
+          "price": parsedJson['response']['products'][i]['price'].toString(),
+          "desc": parsedJson['response']['products'][i]['descp']
+        });
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -38,10 +55,10 @@ class _MarketplacePageState extends State<MarketplacePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ViewProductPage(
-                          image: items[index]['image'],
-                          name: items[index]['name'],
-                          price: items[index]['price'],
-                        ),
+                            image: items[index]['image'],
+                            name: items[index]['name'],
+                            price: items[index]['price'],
+                            desc: items[index]['desc']),
                       ),
                     );
                   },
@@ -79,7 +96,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                               height: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Image.file(
+                                child: Image.memory(
                                   items[index]['image'],
                                   fit: BoxFit.cover,
                                 ),
