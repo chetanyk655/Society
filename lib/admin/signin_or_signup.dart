@@ -20,7 +20,7 @@ class SigninOrSignup extends StatelessWidget {
           Image.asset('assets/images/login_gif.gif'),
           Container(
             width: double.infinity,
-            height: 300,
+            height: 200,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(

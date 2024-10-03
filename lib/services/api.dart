@@ -1,6 +1,6 @@
-import 'dart:ffi';
+//import 'dart:ffi';
 
-import 'package:first_app/society_details.dart';
+//import 'package:first_app/society_details.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

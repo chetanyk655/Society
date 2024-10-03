@@ -1,11 +1,11 @@
-import 'dart:convert';
+//import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
+//import 'dart:typed_data';
 import 'package:first_app/member/market_place/marketplace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:first_app/services/api.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 class AddProductPage extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Product'),
+        title: const Text('Add New Product'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
