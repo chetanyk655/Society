@@ -1,6 +1,7 @@
 import 'package:first_app/admin/admin_login.dart';
 //import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/admin_register_page.dart';
+import 'package:first_app/member/security_call.dart';
 import 'package:flutter/material.dart';
 
 class SigninOrSignup extends StatelessWidget {
@@ -19,7 +20,7 @@ class SigninOrSignup extends StatelessWidget {
           Image.asset('assets/images/login_gif.gif'),
           Container(
             width: double.infinity,
-            height: 216,
+            height: 300,
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -67,6 +68,27 @@ class SigninOrSignup extends StatelessWidget {
                     },
                     child: const Text(
                       'Sign Up',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 50,
+                  child: ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SecurityPage()));
+                    },
+                    child: const Text(
+                      'Security',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
