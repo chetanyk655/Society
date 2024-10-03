@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
+//import 'dart:ffi';
 
-import 'package:first_app/member/current_signed.dart';
+//import 'package:first_app/member/current_signed.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 

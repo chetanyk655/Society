@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+//import 'package:http/http.dart';
 
 class MarketplacePage extends StatefulWidget {
   MarketplacePage({super.key, this.response});
@@ -114,9 +114,9 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Text(
-                                  'Price: \₹${items[index]['price']}',
+                                  'Price: ₹${items[index]['price']}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey[600],
@@ -146,7 +146,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
             });
           }
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

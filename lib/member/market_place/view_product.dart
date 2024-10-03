@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'dart:io';
+//import 'dart:io';
 
 class ViewProductPage extends StatelessWidget {
   final Uint8List image;
@@ -38,35 +38,35 @@ class ViewProductPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Display item information with larger text
             Text(
               name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              'Price: \₹${price}',
+              'Price: ₹$price',
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Description:',
               style: TextStyle(
                 fontSize: 24,
-                color: const Color.fromARGB(255, 15, 13, 13),
+                color:  Color.fromARGB(255, 15, 13, 13),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              '${desc}',
-              style: TextStyle(
+              desc,
+              style: const TextStyle(
                 fontSize: 16,
                 color: const Color.fromARGB(255, 5, 3, 3),
               ),
