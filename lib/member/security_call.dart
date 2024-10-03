@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:first_app/services/api.dart';
 
 class SecurityApp extends StatelessWidget {
   const SecurityApp({super.key});
@@ -27,32 +30,34 @@ class _SecurityPageState extends State<SecurityPage> {
   final picker = ImagePicker();
   final TextEditingController _reasonController = TextEditingController();
   String? selectedMember;
-  List<String> members = ['Flat 101', 'Flat 102', 'Flat 103', 'Flat 104'];
-
-  Map<String, String> memberPhoneNumbers = {
-    'Flat 101': '8767333534',
-    'Flat 102': '9876543210',
-    'Flat 103': '1122334455',
-    'Flat 104': '5566778899',
-  };
+  Map<String, dynamic> parsedJson = {};
+  Map<String, dynamic> member = {};
+  List<String> members = [];
+  XFile? image2;
+  Map<String, String> memberPhoneNumbers = {};
 
   Future<void> _takePicture() async {
     final status = await Permission.camera.request();
     if (status.isGranted) {
-      final pickedFile = await picker.pickImage(source: ImageSource.camera);
-      setState(() {
-        if (pickedFile != null) {
-          _image = File(pickedFile.path);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("No image selected")),
-          );
-        }
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Camera permission denied")),
-      );
+      final ImagePicker _picker = ImagePicker();
+
+      image2 = await _picker.pickImage(source: ImageSource.camera);
+      if (image2 != null) {
+        File imgFile = File(image2!.path);
+        setState(() {
+          if (image2 != null) {
+            _image = File(image2!.path);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("No image selected")),
+            );
+          }
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Camera permission denied")),
+        );
+      }
     }
   }
 
@@ -89,6 +94,19 @@ class _SecurityPageState extends State<SecurityPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (parsedJson.isEmpty) {
+      Api().getMembers().then((res) => {
+            parsedJson = jsonDecode(res),
+            for (int i = 0; i < parsedJson['response'].length; i++)
+              {
+                members.add("Flat ${parsedJson['response'][i]['house_no']}"),
+                memberPhoneNumbers.putIfAbsent("${members[i]}",
+                    () => "${parsedJson['response'][i]['ph_no']}"),
+                print(memberPhoneNumbers),
+              }
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("SECURITY", style: TextStyle(color: Colors.white)),
@@ -123,7 +141,6 @@ class _SecurityPageState extends State<SecurityPage> {
               ),
             ),
             const SizedBox(height: 100),
-
             TextField(
               controller: _reasonController,
               style: const TextStyle(color: Colors.white),
@@ -139,14 +156,14 @@ class _SecurityPageState extends State<SecurityPage> {
               ),
             ),
             const SizedBox(height: 50),
-
             DropdownButtonFormField<String>(
               dropdownColor: Colors.grey[800],
               value: selectedMember,
               items: members.map((String member) {
                 return DropdownMenuItem<String>(
                   value: member,
-                  child: Text(member, style: const TextStyle(color: Colors.white)),
+                  child:
+                      Text(member, style: const TextStyle(color: Colors.white)),
                 );
               }).toList(),
               onChanged: (value) {
@@ -166,17 +183,25 @@ class _SecurityPageState extends State<SecurityPage> {
               ),
             ),
             const SizedBox(height: 50),
-
             Center(
               child: ElevatedButton(
                 onPressed: () {
                   if (selectedMember != null) {
                     String? phoneNumber = memberPhoneNumbers[selectedMember];
                     if (phoneNumber != null) {
-                      _makePhoneCall(phoneNumber);
+                      Api().storeSecurity({
+                        "ph_no": phoneNumber.toString(),
+                        "flat_no": selectedMember!.split(' ')[1],
+                        "reason": _reasonController.text,
+                        "filaname": image2!.name,
+                      }, image2!).then((res) => {
+                            if (jsonDecode(res)['status_code'] == 200)
+                              _makePhoneCall(phoneNumber)
+                          });
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("Phone number not available")),
+                        const SnackBar(
+                            content: Text("Phone number not available")),
                       );
                     }
                   } else {

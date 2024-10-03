@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.4:2000/api";
+  static const baseUrl = "https://ed0d-45-124-142-99.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -279,7 +279,7 @@ class Api {
     final res = await http.post(url, body: body);
 
     if (res.statusCode == 200) {
-      return res;
+      return res.body;
     } else {
       return false;
     }
@@ -290,7 +290,7 @@ class Api {
     final res = await http.get(url);
 
     if (res.statusCode == 200) {
-      return res;
+      return res.body;
     } else {
       return false;
     }
@@ -301,9 +301,59 @@ class Api {
     final res = await http.delete(url, body: body);
 
     if (res.statusCode == 200) {
-      return res;
+      return res.body;
     } else {
       return false;
+    }
+  }
+
+  Future storeSecurity(Map<String, String> body, XFile image) async {
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$baseUrl/api/security'), // Update with your server URL
+    );
+
+    // Add the image file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath('image', image.path),
+    );
+
+    // Add other fields from the body map
+    request.fields['ph_no'] = body['ph_no']!; // Product name
+    request.fields['flat_no'] = body['flat_no']!; // Price
+    request.fields['reason'] = body['reason']!; // Description
+    request.fields['filename'] = body['filename']!; // Filename
+
+    // Send the request
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.bytesToString();
+      print('Upload success: $responseData');
+    } else {
+      print('Upload failed: ${response.statusCode}');
+    }
+  }
+
+  Future getSecurity() async {
+    var url = Uri.parse("$baseUrl/security?email=${CurrentSigned.signedEmail}");
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future getMembers() async {
+    var url = Uri.parse("$baseUrl/members");
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
     }
   }
 }

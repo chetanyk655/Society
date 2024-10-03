@@ -22,6 +22,7 @@ class _MemberRegisterState extends State<MemberRegister> {
   final TextEditingController houseNo = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final TextEditingController _memberPhone = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,6 +99,22 @@ class _MemberRegisterState extends State<MemberRegister> {
                 height: 20,
               ),
               TextField(
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+                controller: _memberPhone,
+                keyboardType: TextInputType.number,
+                maxLength: 10,
+                decoration: const InputDecoration(
+                    prefix: Text('+91 ',
+                        style: TextStyle(color: Colors.white, fontSize: 16)),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    hintText: 'Enter Member Phone No',
+                    hintStyle: TextStyle(color: Colors.white, fontSize: 16)),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
                 style: const TextStyle(color: Colors.white, fontSize: 18),
                 controller: password,
                 obscureText:
@@ -141,6 +158,7 @@ class _MemberRegisterState extends State<MemberRegister> {
                         Api().registration({
                           "name": name.text,
                           "email": email.text,
+                          "ph_no": _memberPhone.text.toString(),
                           "password": password.text,
                           "isAdmin": false,
                           "house_no": houseNo.text

@@ -119,12 +119,11 @@ class AdminPayment extends StatelessWidget {
                                             backgroundColor: Colors.black),
                                         onPressed: () {
                                           Api().storeBill({
-                                            "amount": double.parse(
-                                                _amountController.text),
+                                            "amount": _amountController.text,
                                             "m_email": _emailController.text,
-                                            "name": null,
-                                            "type": null,
-                                            "file_data": null
+                                            "name": null.toString(),
+                                            "type": null.toString(),
+                                            "file_data": null.toString()
                                           }).then((res) => {
                                                 //get here post response
                                                 print("Done")
