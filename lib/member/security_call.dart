@@ -31,7 +31,6 @@ class _SecurityPageState extends State<SecurityPage> {
   final TextEditingController _reasonController = TextEditingController();
   String? selectedMember;
   Map<String, dynamic> parsedJson = {};
-  Map<String, dynamic> member = {};
   List<String> members = [];
   XFile? image2;
   Map<String, String> memberPhoneNumbers = {};
@@ -63,7 +62,7 @@ class _SecurityPageState extends State<SecurityPage> {
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     var status = await Permission.phone.request();
-    if (status.isGranted) {
+    if (!status.isGranted) {
       final Uri phoneUrl = Uri(scheme: 'tel', path: phoneNumber);
       try {
         if (await canLaunch(phoneUrl.toString())) {
@@ -100,9 +99,8 @@ class _SecurityPageState extends State<SecurityPage> {
             for (int i = 0; i < parsedJson['response'].length; i++)
               {
                 members.add("Flat ${parsedJson['response'][i]['house_no']}"),
-                memberPhoneNumbers.putIfAbsent("${members[i]}",
-                    () => "${parsedJson['response'][i]['ph_no']}"),
-                print(memberPhoneNumbers),
+                memberPhoneNumbers[members[i]] =
+                    parsedJson['response'][i]['ph_no']
               }
           });
     }
@@ -112,6 +110,12 @@ class _SecurityPageState extends State<SecurityPage> {
         title: const Text("SECURITY", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
+        ),
       ),
       backgroundColor: Colors.black,
       body: Padding(
@@ -189,15 +193,16 @@ class _SecurityPageState extends State<SecurityPage> {
                   if (selectedMember != null) {
                     String? phoneNumber = memberPhoneNumbers[selectedMember];
                     if (phoneNumber != null) {
+                      print("Selected phone no is ${selectedMember}");
+                      print("phoneNumber : ${phoneNumber}");
+                      print("membersPhoneNumbers : ${memberPhoneNumbers}");
                       Api().storeSecurity({
-                        "ph_no": phoneNumber.toString(),
+                        "ph_no": phoneNumber,
                         "flat_no": selectedMember!.split(' ')[1],
                         "reason": _reasonController.text,
-                        "filaname": image2!.name,
-                      }, image2!).then((res) => {
-                            if (jsonDecode(res)['status_code'] == 200)
-                              _makePhoneCall(phoneNumber)
-                          });
+                        "filename": image2!.name
+                      }, image2!);
+                      _makePhoneCall(phoneNumber);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
