@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 //import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:first_app/services/api.dart';
 
 class ListedView extends StatelessWidget {
-  const ListedView(
-      {super.key, required this.displayList, required this.onRemove});
+  ListedView({
+    super.key,
+    required this.displayList,
+    required this.onRemove,
+  });
 
   final void Function(ContactList expense) onRemove;
 
@@ -59,7 +63,12 @@ class ListedView extends StatelessWidget {
                                               fontSize: 16))),
                                   TextButton(
                                       onPressed: () {
+                                        String contact = displayList[index]
+                                            .contactNumber
+                                            .toString();
                                         onRemove(displayList[index]);
+                                        Api().deleteContacts(
+                                            {"contact": contact});
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor: const Color.fromARGB(

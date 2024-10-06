@@ -1,9 +1,46 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class NoticePage extends StatelessWidget {
-  NoticePage({super.key});
+class NoticePage extends StatefulWidget {
+  const NoticePage({super.key});
+  @override
+  State<StatefulWidget> createState() {
+    return _NoticePageState();
+  }
+}
+
+class _NoticePageState extends State<NoticePage> {
+  File? _file;
   final TextEditingController _notice = TextEditingController();
+
+  Future<void> _pickFile() async {
+    // Request storage permission
+    if (await Permission.storage.request().isGranted) {
+      // Permission granted, allow picking files
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'txt'],
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        setState(() {
+          _file = File(result.files.single.path!);
+        });
+      } else {
+        print('No file selected');
+      }
+    } else {
+      // Permission is denied or permanently denied
+      if (await Permission.storage.isPermanentlyDenied) {
+        openAppSettings(); // Open app settings if permission is permanently denied
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +79,21 @@ class NoticePage extends StatelessWidget {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 80),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _pickFile,
+                  child: Text('Pick File (PDF/Text)'),
+                ),
+                SizedBox(height: 5),
+                _file != null
+                    ? Text('File: ${_file!.path.split('/').last}')
+                    : Text('No file selected'),
+                SizedBox(height: 5),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Upload File'),
+                ),
+                SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
                     Api()

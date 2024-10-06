@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.6:2000/api";
+  static const baseUrl = "https://9f74-45-124-141-73.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -184,6 +184,54 @@ class Api {
     }
   }
 
+  Future getadminBill(email) async {
+    try {
+      final url = Uri.parse('$baseUrl/bills?email=${email}');
+      print(url);
+      final res = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (res.statusCode == 404) {
+        return res.body; // Parse the 404 response body
+      }
+
+      if (res.statusCode == 200) {
+        return res.body; // Parse and return the successful response
+      }
+
+      // If the status code is something else, handle it
+      throw Exception('Failed to load bills: ${res.statusCode}');
+    } catch (e) {
+      print('Error fetching bills: $e');
+      return null; // Return null or handle error properly
+    }
+  }
+
+  Future getBills() async {
+    try {
+      final url = Uri.parse('$baseUrl/bills/allbills');
+      print(url);
+      final res = await http.get(url, headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (res.statusCode == 404) {
+        return res.body; // Parse the 404 response body
+      }
+
+      if (res.statusCode == 200) {
+        return res.body; // Parse and return the successful response
+      }
+
+      // If the status code is something else, handle it
+      throw Exception('Failed to load bills: ${res.statusCode}');
+    } catch (e) {
+      print('Error fetching bills: $e');
+      return null; // Return null or handle error properly
+    }
+  }
+
   Future deleteBill(body) async {
     var url = Uri.parse("$baseUrl/bills");
     final res = await http.delete(url, body: jsonEncode(body), headers: {
@@ -286,12 +334,14 @@ class Api {
 
   Future getContacts() async {
     var url = Uri.parse("$baseUrl/contact");
-    final res = await http.get(url);
+    final res = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+    });
 
     if (res.statusCode == 200) {
       return res.body;
     } else {
-      return false;
+      return res.body;
     }
   }
 

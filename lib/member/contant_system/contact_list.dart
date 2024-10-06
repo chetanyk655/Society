@@ -1,24 +1,33 @@
+import 'dart:convert';
+
 import 'package:first_app/member/contant_system/contactListView.dart';
 import 'package:first_app/member/contant_system/modal_overlay.dart';
 import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:flutter/material.dart';
+import 'package:first_app/services/api.dart';
+import 'package:first_app/member/current_signed.dart';
 //import 'package:google_fonts/google_fonts.dart';
 
 class ContactListDisplay extends StatefulWidget {
-  const ContactListDisplay({super.key});
-
+  ContactListDisplay({super.key, required this.parsedJson});
+  Map<String, dynamic> parsedJson = {};
   @override
   State<StatefulWidget> createState() {
-    return _ContactListDisplayState();
+    return _ContactListDisplayState(parsedJson: parsedJson);
   }
 }
 
 class _ContactListDisplayState extends State<ContactListDisplay> {
+  _ContactListDisplayState({required this.parsedJson});
+
+  Map<String, dynamic> parsedJson = {};
+
   List<ContactList> contactList = [];
 
   void _addExpense(ContactList contact) {
     setState(() {
       contactList.add(contact);
+      parsedJson['response'] = {};
     });
   }
 
@@ -38,6 +47,11 @@ class _ContactListDisplayState extends State<ContactListDisplay> {
               textColor: Colors.white,
               onPressed: () {
                 setState(() {
+                  Api().saveContact({
+                    "name": contact.contactName,
+                    "ph": contact.contactNumber.toString(),
+                    "uploader": CurrentSigned.signedEmail,
+                  });
                   contactList.insert(expenseIndex, contact);
                 });
               })),
@@ -58,6 +72,12 @@ class _ContactListDisplayState extends State<ContactListDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < parsedJson['response'].length; i++) {
+      contactList.add(ContactList(
+          contactName: parsedJson['response'][i]['con_name'],
+          contactNumber: int.parse(parsedJson['response'][i]['con_no'])));
+    }
+
     return Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),

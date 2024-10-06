@@ -5,32 +5,34 @@ import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
 //import 'package:http/http.dart';
 
-class MarketplacePageAdmin extends StatefulWidget {
-  MarketplacePageAdmin({super.key, this.response});
+class MarketPlacePageAdmin extends StatefulWidget {
+  MarketPlacePageAdmin({super.key, this.response});
   String? response;
   @override
-  _MarketplacePageAdminState createState() =>
-      _MarketplacePageAdminState(response: response);
+  _MarketPlacePageAdminState createState() =>
+      _MarketPlacePageAdminState(response: response);
 }
 
-class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
-  _MarketplacePageAdminState({this.response});
+class _MarketPlacePageAdminState extends State<MarketPlacePageAdmin> {
+  _MarketPlacePageAdminState({this.response});
   String? response;
   Map<String, dynamic> parsedJson = {};
   List<Map<String, dynamic>> items = [];
 
   @override
   Widget build(BuildContext context) {
-    parsedJson = jsonDecode(response!);
-    if (parsedJson['status_code'] == 200) {
-      for (int i = 0; i < parsedJson['total_prod']; i++) {
-        items.add({
-          "image": base64Decode(
-              parsedJson['response']['products'][i]['image'].split(',').last),
-          "name": parsedJson['response']['products'][i]['p_name'],
-          "price": parsedJson['response']['products'][i]['price'].toString(),
-          "desc": parsedJson['response']['products'][i]['descp']
-        });
+    if (parsedJson.isEmpty) {
+      parsedJson = jsonDecode(response!);
+      if (parsedJson['status_code'] == 200) {
+        for (int i = 0; i < parsedJson['total_prod']; i++) {
+          items.add({
+            "image": base64Decode(
+                parsedJson['response']['products'][i]['image'].split(',').last),
+            "name": parsedJson['response']['products'][i]['p_name'],
+            "price": parsedJson['response']['products'][i]['price'].toString(),
+            "desc": parsedJson['response']['products'][i]['descp']
+          });
+        }
       }
     }
     return Scaffold(
@@ -114,9 +116,9 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 Text(
-                                  'Price: \₹${items[index]['price']}',
+                                  'Price: ₹${items[index]['price']}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey[600],
@@ -132,22 +134,6 @@ class _MarketplacePageAdminState extends State<MarketplacePageAdmin> {
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () async {
-          final newItem = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddProductPage()),
-          );
-
-          if (newItem != null) {
-            setState(() {
-              items.add(newItem);
-            });
-          }
-        },
-        child: Icon(Icons.add),
-      ),
     );
   }
 }

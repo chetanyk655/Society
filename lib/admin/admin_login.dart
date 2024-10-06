@@ -127,11 +127,15 @@ class _AdminLoginState extends State<AdminLogin> {
                         }).then((res) => {
                               if (res)
                                 {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AdminDashboard()))
+                                  Api().getMembers().then((res) => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AdminDashboard(
+                                                      response: res,
+                                                    )))
+                                      })
                                 }
                             });
                       },

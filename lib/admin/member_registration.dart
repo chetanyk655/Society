@@ -155,22 +155,16 @@ class _MemberRegisterState extends State<MemberRegister> {
                           houseNo.text != "" &&
                           email.text != "" &&
                           password.text != "") {
-                        Api().registration({
+                        Map<String, dynamic> newitem = {
                           "name": name.text,
                           "email": email.text,
                           "ph_no": _memberPhone.text.toString(),
                           "password": password.text,
                           "isAdmin": false,
-                          "house_no": houseNo.text
-                        }).then((res) => {
-                              if (res == true)
-                                {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AdminDashboard()))
-                                }
+                          "house_no": houseNo.text,
+                        };
+                        Api().registration(newitem).then((res) => {
+                              if (res == true) {Navigator.pop(context, newitem)}
                             });
                       }
                     },

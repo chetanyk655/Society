@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:first_app/admin/Complaint_and_feedbak_admin.dart';
 import 'package:first_app/admin/admin_dashboard.dart';
 import 'package:first_app/admin/admin_payment.dart';
+import 'package:first_app/admin/bill_controller.dart';
+import 'package:first_app/admin/bill_status.dart';
 import 'package:first_app/admin/facility_booking.dart';
 import 'package:first_app/admin/marketplace_admin.dart';
 import 'package:first_app/admin/member_registration.dart';
@@ -55,15 +59,19 @@ class AdminDrawer extends StatelessWidget {
                     color: Colors.white,
                   ),
                   title: const Text(
-                    'Maintance Payment',
+                    ' Payment Controller',
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AdminPayment()),
-                    );
+                    Api().getBills().then((res) => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AdminPaymentControl(response: res),
+                              ))
+                        });
                   },
                 ),
                 ListTile(
@@ -142,18 +150,6 @@ class AdminDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.security,
-                    size: 26,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Security',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(
                     Icons.shopping_bag_outlined,
                     size: 26,
                     color: Colors.white,
@@ -163,12 +159,11 @@ class AdminDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
                     Api().getProducts().then((res) => {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MarketplacePageAdmin(
+                              builder: (context) => MarketPlacePageAdmin(
                                 response: res,
                               ),
                             ),
@@ -187,12 +182,15 @@ class AdminDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ContactListDisplay()),
-                    );
+                    Api().getContacts().then((res) => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactListDisplay(
+                                  parsedJson: jsonDecode(res)),
+                            ),
+                          )
+                        });
                   },
                 ),
                 ListTile(

@@ -1,12 +1,14 @@
 //import 'dart:ffi';
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
 class AdminPayment extends StatelessWidget {
-  AdminPayment({super.key});
+  AdminPayment({super.key, required this.email});
   final _amountController = TextEditingController();
-  final _emailController = TextEditingController();
+  String email;
   @override
   Widget build(BuildContext context) {
     final amount = _amountController.text;
@@ -49,18 +51,6 @@ class AdminPayment extends StatelessWidget {
                         label: Text('Enter Amount',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 16))),
-                  ),
-                  TextField(
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: const InputDecoration(
-                        label: Text('Enter Member Email id',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16))),
-                  ),
-                  const SizedBox(
-                    height: 30,
                   ),
                   ElevatedButton(
                       onPressed: () {
@@ -118,17 +108,35 @@ class AdminPayment extends StatelessWidget {
                                         style: TextButton.styleFrom(
                                             backgroundColor: Colors.black),
                                         onPressed: () {
-                                          Api().storeBill({
-                                            "amount": _amountController.text,
-                                            "m_email": _emailController.text,
-                                            "name": null.toString(),
-                                            "type": null.toString(),
-                                            "file_data": null.toString()
-                                          }).then((res) => {
-                                                //get here post response
-                                                print("Done")
-                                              });
-                                          Navigator.pop(context);
+                                          if (email != "") {
+                                            Api().storeBill({
+                                              "amount": _amountController.text,
+                                              "m_email": email,
+                                              "name": null.toString(),
+                                              "type": null.toString(),
+                                              "file_data": null.toString()
+                                            });
+                                            Api()
+                                                .getadminBill(email)
+                                                .then((res) => {
+                                                      print(jsonDecode(
+                                                              res)['response']
+                                                          [0]['b_id']),
+                                                      Api().storeMaintenance({
+                                                        "amount":
+                                                            _amountController
+                                                                .text,
+                                                        "email": email,
+                                                        "bid": jsonDecode(res)[
+                                                                    'response']
+                                                                [0]['b_id']
+                                                            .toString(),
+                                                        "pay_status": 'Unpaid'
+                                                      })
+                                                    });
+
+                                            Navigator.pop(context);
+                                          }
                                         },
                                         child: const Text(
                                           'confirm',

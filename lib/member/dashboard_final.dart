@@ -248,13 +248,15 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Api().getContacts().then((res) => {print(res)});
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ContactListDisplay(),
-                    ),
-                  );
+                  Api().getContacts().then((res) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ContactListDisplay(parsedJson: jsonDecode(res)),
+                          ),
+                        )
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
