@@ -13,6 +13,7 @@ import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'dart:convert';
+import 'package:first_app/member/SecurityMember.dart';
 
 class DashBoardFinal extends StatelessWidget {
   const DashBoardFinal({super.key});
@@ -98,12 +99,16 @@ class DashBoardFinal extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SecurityApp(),
-                    ),
-                  );
+                  Api().getSecurity().then((res) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SecurityMember(
+                              response: res,
+                            ),
+                          ),
+                        )
+                      });
                 },
                 splashColor: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),

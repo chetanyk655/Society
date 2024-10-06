@@ -62,7 +62,7 @@ class _SecurityPageState extends State<SecurityPage> {
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     var status = await Permission.phone.request();
-    if (!status.isGranted) {
+    if (status.isGranted) {
       final Uri phoneUrl = Uri(scheme: 'tel', path: phoneNumber);
       try {
         if (await canLaunch(phoneUrl.toString())) {
@@ -111,9 +111,9 @@ class _SecurityPageState extends State<SecurityPage> {
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
+            Navigator.pop(context); // Go back to the previous screen
           },
         ),
       ),
@@ -201,7 +201,7 @@ class _SecurityPageState extends State<SecurityPage> {
                         "flat_no": selectedMember!.split(' ')[1],
                         "reason": _reasonController.text,
                         "filename": image2!.name
-                      }, image2!);
+                      }, image2!).then((res) => print(res));
                       _makePhoneCall(phoneNumber);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

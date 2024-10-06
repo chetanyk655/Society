@@ -1,3 +1,4 @@
+import 'package:first_app/admin_auth.dart';
 import 'package:first_app/member/member_login.dart';
 import 'package:first_app/admin/signin_or_signup.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,8 @@ class SelectionScreen extends StatelessWidget {
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.black),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SigninOrSignup()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => adminAuth()));
                     },
                     child: const Text(
                       'Admin',

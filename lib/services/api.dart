@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "http://192.168.1.9:2000/api";
+  static const baseUrl = "http://192.168.1.6:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -198,8 +198,7 @@ class Api {
   Future<void> uploadproduct(Map<String, String> body, XFile image) async {
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse(
-          'http://192.168.1.4:2000/api/marketplace'), // Update with your server URL
+      Uri.parse('$baseUrl/marketplace'), // Update with your server URL
     );
 
     // Add the image file to the request
@@ -310,9 +309,9 @@ class Api {
   Future storeSecurity(Map<String, String> body, XFile image) async {
     final request = http.MultipartRequest(
       'POST',
-      Uri.parse('$baseUrl/api/security'), // Update with your server URL
+      Uri.parse('$baseUrl/security'), // Update with your server URL
     );
-
+    print("I am that print $body and \n image is : $image");
     // Add the image file to the request
     request.files.add(
       await http.MultipartFile.fromPath('image', image.path),
@@ -333,6 +332,13 @@ class Api {
     } else {
       print('Upload failed: ${response.statusCode}');
     }
+  }
+
+  Future checkAdminAuth(body) async {
+    var url = Uri.parse('$baseUrl/admin_auth');
+    final response = await http.post(url, body: body);
+
+    return response.body;
   }
 
   Future getSecurity() async {

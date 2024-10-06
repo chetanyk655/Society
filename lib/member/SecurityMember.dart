@@ -4,35 +4,33 @@ import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
 //import 'package:http/http.dart';
+import 'package:first_app/member/securityView.dart';
 
-class MarketplacePage extends StatefulWidget {
-  MarketplacePage({super.key, this.response});
-  String? response;
+class SecurityMember extends StatefulWidget {
+  SecurityMember({super.key, required this.response});
+  String response;
   @override
-  _MarketplacePageState createState() =>
-      _MarketplacePageState(response: response);
+  _SecurityMemberState createState() =>
+      _SecurityMemberState(response: response);
 }
 
-class _MarketplacePageState extends State<MarketplacePage> {
-  _MarketplacePageState({this.response});
-  String? response;
+class _SecurityMemberState extends State<SecurityMember> {
+  _SecurityMemberState({required this.response});
+  String response;
   Map<String, dynamic> parsedJson = {};
   List<Map<String, dynamic>> items = [];
 
   @override
   Widget build(BuildContext context) {
-    if (parsedJson.isEmpty) {
-      parsedJson = jsonDecode(response!);
-      if (parsedJson['status_code'] == 200) {
-        for (int i = 0; i < parsedJson['total_prod']; i++) {
-          items.add({
-            "image": base64Decode(
-                parsedJson['response']['products'][i]['image'].split(',').last),
-            "name": parsedJson['response']['products'][i]['p_name'],
-            "price": parsedJson['response']['products'][i]['price'].toString(),
-            "desc": parsedJson['response']['products'][i]['descp']
-          });
-        }
+    parsedJson = jsonDecode(response);
+    print(parsedJson);
+    if (parsedJson['status_code'] == 200) {
+      for (int i = 0; i < parsedJson['total_queries']; i++) {
+        items.add({
+          "image":
+              base64Decode(parsedJson['response'][i]['image'].split(',').last),
+          "reason": parsedJson['response'][i]['reason'],
+        });
       }
     }
     return Scaffold(
@@ -40,12 +38,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text('Marketplace',
+        title: const Text('Security',
             style: TextStyle(color: Colors.white, fontSize: 18)),
       ),
       body: items.isEmpty
           ? const Center(
-              child: Text('No items added yet',
+              child: Text('No Secuirty Queries Available now',
                   style: TextStyle(color: Colors.white, fontSize: 18)))
           : ListView.builder(
               itemCount: items.length,
@@ -54,15 +52,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                   onTap: () {
                     // Navigate to the detailed view when the item is clicked
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewProductPage(
-                            image: items[index]['image'],
-                            name: items[index]['name'],
-                            price: items[index]['price'],
-                            desc: items[index]['desc']),
-                      ),
-                    );
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SecurityView(
+                              image: items[index]['image'],
+                              reason: items[index]['reason']),
+                        ));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -110,19 +105,13 @@ class _MarketplacePageState extends State<MarketplacePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  items[index]['name'],
+                                  items[index]['reason'],
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Price: ₹${items[index]['price']}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey[600],
-                                  ),
                                 ),
                               ],
                             ),
