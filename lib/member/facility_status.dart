@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'dummy_data.dart'; // Import the file containing dummy data
 import 'package:first_app/services/api.dart';
 
-class FacilityBookingScreen extends StatefulWidget {
-  FacilityBookingScreen({required this.response});
+class FacilityStatus extends StatefulWidget {
+  FacilityStatus({required this.response});
   String response;
   @override
-  _FacilityBookingScreenState createState() =>
-      _FacilityBookingScreenState(response: response);
+  _FacilityStatusState createState() =>
+      _FacilityStatusState(response: response);
 }
 
-class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
-  _FacilityBookingScreenState({required this.response});
+class _FacilityStatusState extends State<FacilityStatus> {
+  _FacilityStatusState({required this.response});
   String response;
   List<Map<String, dynamic>> facilityList = [];
   Map<String, dynamic> parsedJson = {};
@@ -67,20 +67,17 @@ class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
                   return FacilityCard(
                     facility: facilityList[index]['data'],
                     isApproved: facilityList[index]['approved'],
-                    onApprove: () {
-                      final email = facilityList[index]['data']['email'];
-                      final id = facilityList[index]['data']['id'];
-                      print("HEelo$id");
-                      Api().changeFacilityStatus(email, id, "Approved");
-                      _approveCard(index);
-                      // Set the card as approved
-                    },
-                    onDecline: () {
-                      final email = facilityList[index]['data']['email'];
-                      final id = facilityList[index]['data']['id'];
-                      Api().changeFacilityStatus(email, id, "Declined");
-                      _removeCard(index); // Remove the card
-                    },
+                    // onApprove: () {
+                    //   final email = facilityList[index]['data']['email'];
+                    //   Api().changeFacilityStatus(email, "Approved");
+                    //   _approveCard(index);
+                    //   // Set the card as approved
+                    // },
+                    // onDecline: () {
+                    //   final email = facilityList[index]['data']['email'];
+                    //   Api().changeFacilityStatus(email, "Declined");
+                    //   _removeCard(index); // Remove the card
+                    // },
                   );
                 },
               ),
@@ -92,14 +89,10 @@ class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
 class FacilityCard extends StatelessWidget {
   final Map<String, dynamic> facility; // Change type to dynamic to include date
   final bool isApproved;
-  final VoidCallback onApprove;
-  final VoidCallback onDecline;
 
   FacilityCard({
     required this.facility,
     required this.isApproved,
-    required this.onApprove,
-    required this.onDecline,
   });
 
   @override
@@ -160,30 +153,19 @@ class FacilityCard extends StatelessWidget {
                     const Color.fromARGB(179, 57, 10, 243), // Light white color
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
+            Text(
+              'Status : ${facility['status']} ', // Display date
+              style: TextStyle(
+                  fontSize: 14,
+                  color: facility['status'] == "Approved"
+                      ? const Color.fromARGB(227, 0, 255, 30)
+                      : const Color.fromARGB(
+                          255, 248, 28, 12) // Light white color
+                  ),
+            ),
+
             // Only show buttons if the card hasn't been approved or declined
-            if (!isApproved)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed:
-                        onApprove, // Handle approve action (hide buttons)
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: Text('Approve'),
-                  ),
-                  SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: onDecline, // Handle decline action (remove card)
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: Text('Decline'),
-                  ),
-                ],
-              ),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/notice.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/emergency_contacts.dart';
+
 import 'package:first_app/member/market_place/marketPlace_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
@@ -94,24 +95,6 @@ class AdminDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(
-                    Icons.message,
-                    size: 26,
-                    color: Colors.white,
-                  ),
-                  title: const Text(
-                    'Member Sign Up',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MemberRegister()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
                     Icons.notification_add,
                     size: 26,
                     color: Colors.white,
@@ -141,11 +124,13 @@ class AdminDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const FacilityBookingAdmin()));
+                    Api().getFacilities().then((res) => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      FacilityBookingScreen(response: res)))
+                        });
                   },
                 ),
                 ListTile(

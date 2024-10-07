@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "https://9f74-45-124-141-73.ngrok-free.app/api";
+  static const baseUrl = "https://4a11-45-124-141-73.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -294,6 +294,16 @@ class Api {
     }
   }
 
+  Future changeFacilityStatus(email, id, ticket) async {
+    var url = Uri.parse("$baseUrl/facility?email=${email}&id=${id}");
+    final res = await http.put(url, body: {"AdminStatus": "${ticket}"});
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
   Future getSingleFacility() async {
     var url = Uri.parse(
         "$baseUrl/facility/singleFacility?email=${CurrentSigned.signedEmail}");
@@ -317,7 +327,7 @@ class Api {
     if (res.statusCode == 200) {
       return res.body;
     } else {
-      return false;
+      return res.body;
     }
   }
 

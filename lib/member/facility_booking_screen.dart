@@ -1,3 +1,4 @@
+import 'package:first_app/member/facility_status.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -124,7 +125,7 @@ class _FacilityBookingScreen extends State<FacilityBookingScreen> {
                               border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20))),
-                              hintText: 'Enter the timings(hh,mm)',
+                              hintText: 'Time(hh,mm)',
                               hintStyle: TextStyle(color: Colors.white)),
                         ),
                       ),
@@ -177,7 +178,22 @@ class _FacilityBookingScreen extends State<FacilityBookingScreen> {
                                 fontSize: 20),
                           ),
                         ),
-                      )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                          onPressed: () => {
+                                Api().getSingleFacility().then((res) => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FacilityStatus(
+                                                      response: res)))
+                                    })
+                              },
+                          child: Text("Enquiries"))
                     ],
                   )
                   // ),
