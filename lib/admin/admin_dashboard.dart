@@ -67,7 +67,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 icon: const Icon(Icons.logout)),
           ],
         ),
-        drawer: const AdminDrawer(),
+        drawer: AdminDrawer(),
         body: FutureBuilder<List<Map<String, dynamic>>>(
           future: _futureUsers,
           builder: (context, snapshot) {

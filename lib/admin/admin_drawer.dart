@@ -18,7 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
 class AdminDrawer extends StatelessWidget {
-  const AdminDrawer({super.key});
+  Map<String, dynamic> parsedJsonComplaint = {};
+  Map<String, dynamic> parsedJsonFeedback = {};
+  AdminDrawer({super.key});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -104,12 +106,20 @@ class AdminDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const ComplaintAndFeedbakAdmin()));
+                    Api()
+                        .getComplaints()
+                        .then((res) => parsedJsonComplaint = jsonDecode(res));
+                    Api().getFeedbacks().then((res) => {
+                          parsedJsonFeedback = jsonDecode(res),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AdminComplaintFeedback(
+                                          response: {
+                                            "complaints": parsedJsonComplaint,
+                                            "feedbacks": parsedJsonFeedback
+                                          })))
+                        });
                   },
                 ),
                 ListTile(

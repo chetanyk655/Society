@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:first_app/member/current_signed.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:first_app/member/complaint_status.dart';
 //import 'dart:convert';
 import 'dart:io';
 
@@ -85,45 +89,96 @@ class _ComplaintAndFeedback extends State<ComplaintAndFeedback> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        Api().storeComplaintAndFeedback({
-                          "message": _message.text,
-                          "ticket": 'feedbacks',
-                          "filename": image2!.name
-                        }, image2!);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple, // Button color
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                        textStyle: const TextStyle(fontSize: 20),
+                    Row(children: [
+                      SizedBox(
+                        width: 30,
                       ),
-                      child: const Text(
-                        'Send Feedback',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      Column(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Api().storeComplaintAndFeedback({
+                                "message": _message.text,
+                                "ticket": 'feedbacks',
+                                "email": CurrentSigned.signedEmail,
+                                "filename": image2!.name
+                              }, image2!);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.purple, // Button color
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 50, vertical: 15),
+                              textStyle: const TextStyle(fontSize: 20),
+                            ),
+                            child: const Text(
+                              'Send Feedback',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Container(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Api().storeComplaintAndFeedback({
+                                  "message": _message.text,
+                                  "ticket": "complaints",
+                                  "email": CurrentSigned.signedEmail,
+                                  "filename": image2!.name
+                                }, image2!);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple, // Button color
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 50, vertical: 15),
+                                textStyle: const TextStyle(fontSize: 20),
+                              ),
+                              child: const Text(
+                                'Send Complaint',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: () {
-                        Api().storeComplaintAndFeedback({
-                          "message": _message.text,
-                          "ticket": "complaints",
-                          "filename": image2!.name
-                        }, image2!);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple, // Button color
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                        textStyle: const TextStyle(fontSize: 20),
+                      SizedBox(
+                        width: 30,
                       ),
-                      child: const Text(
-                        'Send Complaint',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Map<String, dynamic> parsedJsonComplaint = {};
+                            Map<String, dynamic> parsedJsonFeedback = {};
+                            Api()
+                                .emailComplaints(CurrentSigned.signedEmail)
+                                .then((res) =>
+                                    parsedJsonComplaint = jsonDecode(res));
+                            Api()
+                                .emailFeedbacks(CurrentSigned.signedEmail)
+                                .then((res) => {
+                                      parsedJsonFeedback = jsonDecode(res),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ComplaintFeedbackStatus(
+                                                      response: {
+                                                        "complaints":
+                                                            parsedJsonComplaint,
+                                                        "feedbacks":
+                                                            parsedJsonFeedback
+                                                      })))
+                                    });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(15),
+                          ),
+                          child: const Icon(
+                            Icons.info,
+                            size: 30,
+                          ))
+                    ])
                   ],
                 ),
               ),
