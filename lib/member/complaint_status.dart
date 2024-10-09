@@ -1,30 +1,27 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'dummy_data_facility.dart'; // Import the file containing dummy data
+import 'dummy_data_complaint.dart'; // Import the file containing dummy data
 import 'package:first_app/services/api.dart';
 
-class FacilityBookingScreen extends StatefulWidget {
-  FacilityBookingScreen({required this.response});
-  String response;
+class ComplaintFeedbackStatus extends StatefulWidget {
+  ComplaintFeedbackStatus({required this.response});
+  Map<String, dynamic> response;
   @override
-  _FacilityBookingScreenState createState() =>
-      _FacilityBookingScreenState(response: response);
+  _ComplaintFeedbackStatusState createState() =>
+      _ComplaintFeedbackStatusState(response: response);
 }
 
-class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
-  _FacilityBookingScreenState({required this.response});
-  String response;
+class _ComplaintFeedbackStatusState extends State<ComplaintFeedbackStatus> {
+  _ComplaintFeedbackStatusState({required this.response});
+  Map<String, dynamic> response;
   List<Map<String, dynamic>> facilityList = [];
-  Map<String, dynamic> parsedJson = {};
 
   @override
   void initState() {
     super.initState();
-    parsedJson = jsonDecode(response);
-    print(parsedJson);
 
-    facilityList = getMultipleDummyData(parsedJson).map((facility) {
+    facilityList = getMultipleDummyData(response).map((facility) {
       return {'data': facility, 'approved': false}; // Adding approval status
     }).toList();
   }
@@ -48,14 +45,14 @@ class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'FACILITY BOOKING',
+          'Complaint & Feedbacks',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color.fromARGB(255, 87, 87, 87),
       ),
       body: facilityList.isEmpty
           ? Center(
-              child: Text("No more bookings",
+              child: Text("No more Complaints or Feedbacks",
                   style: TextStyle(color: const Color.fromARGB(255, 8, 7, 7))))
           : Container(
               color: const Color.fromARGB(
@@ -68,17 +65,10 @@ class _FacilityBookingScreenState extends State<FacilityBookingScreen> {
                     facility: facilityList[index]['data'],
                     isApproved: facilityList[index]['approved'],
                     onApprove: () {
-                      final email = facilityList[index]['data']['email'];
-                      final id = facilityList[index]['data']['id'];
-                      print("HEelo$id");
-                      Api().changeFacilityStatus(email, id, "Approved");
                       _approveCard(index);
                       // Set the card as approved
                     },
                     onDecline: () {
-                      final email = facilityList[index]['data']['email'];
-                      final id = facilityList[index]['data']['id'];
-                      Api().changeFacilityStatus(email, id, "Declined");
                       _removeCard(index); // Remove the card
                     },
                   );
@@ -118,15 +108,17 @@ class FacilityCard extends StatelessWidget {
             Text(
               facility['title'] ?? 'No Title Available',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color:
-                    const Color.fromARGB(255, 14, 14, 14), // White text color
-              ),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: facility['title'] == "Complaint"
+                      ? const Color.fromARGB(255, 255, 0, 0)
+                      : const Color.fromARGB(
+                          255, 2, 255, 10) // White text color
+                  ),
             ),
             SizedBox(height: 8),
             Text(
-              facility['email'] ?? 'No Description Available',
+              facility['email'] ?? 'No email Available',
               style: TextStyle(
                 fontSize: 14,
                 color:
@@ -135,7 +127,7 @@ class FacilityCard extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              facility['description'] ?? 'No email Available',
+              facility['description'] ?? 'No message Available',
               style: TextStyle(
                 fontSize: 14,
                 color:
@@ -160,30 +152,19 @@ class FacilityCard extends StatelessWidget {
                     const Color.fromARGB(179, 57, 10, 243), // Light white color
               ),
             ),
-            SizedBox(height: 16),
-            // Only show buttons if the card hasn't been approved or declined
-            if (!isApproved)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed:
-                        onApprove, // Handle approve action (hide buttons)
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: Text('Approve'),
-                  ),
-                  SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: onDecline, // Handle decline action (remove card)
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: Text('Decline'),
-                  ),
-                ],
+            SizedBox(height: 8),
+            Text(
+              'Status : ${facility['status']}', // Display date
+              style: TextStyle(
+                fontSize: 14,
+                color: facility['status'] == "UNAVAILABLE"
+                    ? const Color.fromARGB(179, 201, 1, 246)
+                    : facility['status'] == "Acknowledged"
+                        ? const Color.fromARGB(255, 0, 255, 8)
+                        : const Color.fromARGB(
+                            255, 255, 17, 0), // Light white color
               ),
+            ),
           ],
         ),
       ),

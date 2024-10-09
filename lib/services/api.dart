@@ -53,6 +53,56 @@ class Api {
     }
   }
 
+  Future updateComplaintStatus(email, id, ticket) async {
+    var url = Uri.parse(
+        "$baseUrl/complaints?email=${Uri.encodeComponent(email)}&id=${Uri.encodeComponent(id)}");
+    final res = await http
+        .put(url, body: jsonEncode({"AdminStatus": "${ticket}"}), headers: {
+      'Content-Type': 'application/json',
+    });
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future updateFeedbackStatus(email, id, ticket) async {
+    var url = Uri.parse(
+        "$baseUrl/feedbacks?email=${Uri.encodeComponent(email)}&id=${Uri.encodeComponent(id)}");
+    final res = await http
+        .put(url, body: jsonEncode({"AdminStatus": "${ticket}"}), headers: {
+      'Content-Type': 'application/json',
+    });
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future getComplaints() async {
+    var url = Uri.parse("$baseUrl/complaints");
+
+    final res = await http.get(url);
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future getFeedbacks() async {
+    var url = Uri.parse("$baseUrl/feedbacks");
+
+    final res = await http.get(url);
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
   // ignore: non_constant_identifier_names
   Future checklogin(body) async {
     var url = Uri.parse("$baseUrl/checklogin");
@@ -123,6 +173,7 @@ class Api {
 
     request.fields['message'] = body['message']!;
     request.fields['filename'] = body['filename']!;
+    request.fields['email'] = body['email']!;
 
     // Send the request
     final response = await request.send();
@@ -295,8 +346,32 @@ class Api {
   }
 
   Future changeFacilityStatus(email, id, ticket) async {
-    var url = Uri.parse("$baseUrl/facility?email=${email}&id=${id}");
-    final res = await http.put(url, body: {"AdminStatus": "${ticket}"});
+    var url = Uri.parse(
+        "$baseUrl/facility?email=${Uri.encodeComponent(email)}&id=${Uri.encodeComponent(id)}");
+    final res = await http
+        .put(url, body: jsonEncode({"AdminStatus": "${ticket}"}), headers: {
+      "Content-Type": "application/json",
+    });
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future emailComplaints(email) async {
+    var url = Uri.parse("$baseUrl/complaints/emailComplaints?email=${email}");
+    final res = await http.get(url);
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
+  Future emailFeedbacks(email) async {
+    var url = Uri.parse("$baseUrl/feedbacks/emailFeedbacks?email=${email}");
+    final res = await http.get(url);
     if (res.statusCode == 200) {
       return res.body;
     } else {
