@@ -8,7 +8,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "https://4a11-45-124-141-73.ngrok-free.app/api";
+  static const baseUrl = "https://4c8f-103-134-7-130.ngrok-free.app/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
