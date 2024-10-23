@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:first_app/member/market_place/add_product.dart';
-import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart';
 import 'package:first_app/member/securityView.dart';
 
 class SecurityMember extends StatefulWidget {
@@ -123,22 +120,6 @@ class _SecurityMemberState extends State<SecurityMember> {
                 );
               },
             ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () async {
-          final newItem = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddProductPage()),
-          );
-
-          if (newItem != null) {
-            setState(() {
-              items.add(newItem);
-            });
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

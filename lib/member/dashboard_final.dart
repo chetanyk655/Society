@@ -1,13 +1,10 @@
 import 'package:first_app/member/Complaint_and_feedback.dart';
 import 'package:first_app/member/contant_system/contact_list.dart';
-import 'package:first_app/member/contant_system/structure_for_contacts.dart';
 import 'package:first_app/member/emergency_contacts.dart';
 import 'package:first_app/member/facility_booking_screen.dart';
 import 'package:first_app/member/market_place/marketplace_screen.dart';
-// import 'package:first_app/member/contant_system/contact_list.dart';
 import 'package:first_app/member/notice/notice.dart';
 import 'package:first_app/member/payment.dart';
-import 'package:first_app/member/security_call.dart';
 import 'package:first_app/selection_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
@@ -133,8 +130,7 @@ class DashBoardFinal extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                NoticeMember(response: res.toString()),
+                            builder: (context) => NoticeMember(response: res),
                           ),
                         )
                       });

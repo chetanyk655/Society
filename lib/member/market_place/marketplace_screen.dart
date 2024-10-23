@@ -1,9 +1,10 @@
 import 'dart:convert';
-
 import 'package:first_app/member/market_place/add_product.dart';
 import 'package:first_app/member/market_place/view_product.dart';
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:first_app/services/api.dart';
 
 class MarketplacePage extends StatefulWidget {
   MarketplacePage({super.key, this.response});
@@ -18,6 +19,21 @@ class _MarketplacePageState extends State<MarketplacePage> {
   String? response;
   Map<String, dynamic> parsedJson = {};
   List<Map<String, dynamic>> items = [];
+  Future<void> _launchDialer(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    if (await canLaunch(launchUri.toString())) {
+      await launch(launchUri.toString());
+    } else {
+      throw 'Could not launch $launchUri';
+    }
+  }
+
+  void removeItemByName(String nameToRemove) {
+    items.removeWhere((item) => item['pid'] == nameToRemove);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +46,9 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 parsedJson['response']['products'][i]['image'].split(',').last),
             "name": parsedJson['response']['products'][i]['p_name'],
             "price": parsedJson['response']['products'][i]['price'].toString(),
-            "desc": parsedJson['response']['products'][i]['descp']
+            "desc": parsedJson['response']['products'][i]['descp'],
+            "ph": parsedJson['response']['products'][i]['ph_no'],
+            "pid": parsedJson['response']['products'][i]['prod_id'].toString()
           });
         }
       }
@@ -63,6 +81,42 @@ class _MarketplacePageState extends State<MarketplacePage> {
                             desc: items[index]['desc']),
                       ),
                     );
+                  },
+                  onLongPress: () {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: const Text(
+                                  'Do you want to delete this Product'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(ctx);
+                                    },
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 135, 124, 25)),
+                                    child: const Text('cancel',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16))),
+                                TextButton(
+                                    onPressed: () {
+                                      String prod_id = items[index]['pid'];
+                                      setState(() {
+                                        removeItemByName(prod_id);
+                                      });
+                                      Api().deleteProduct({"id": prod_id});
+                                      Navigator.pop(ctx);
+                                    },
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 135, 124, 25)),
+                                    child: const Text('Delete',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 16)))
+                              ],
+                            ));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -122,6 +176,32 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.grey[600],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 100),
+                                  child: ElevatedButton(
+                                    onPressed: () =>
+                                        _launchDialer(items[index]['ph']),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 2, 255, 10),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            10), // Set the border radius here
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "Buy Now",
+                                      style: GoogleFonts.notoSans(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],

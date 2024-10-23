@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
@@ -10,15 +9,16 @@ class BillStatus extends StatelessWidget {
   List<Map<String, dynamic>> items = [];
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     parsedJson = jsonDecode(response);
-    for (int i = 0; i < parsedJson['response'].length; i++) {
-      items.add({
-        "bill_id": parsedJson['response'][i]['bill_id'].toString(),
-        "amount": parsedJson['response'][i]['amount'].toString(),
-        "email": parsedJson['response'][i]['m_email'],
-        "pay_status": parsedJson['response'][i]['pay_status']
-      });
+    if (parsedJson['status_code'] != 404) {
+      for (int i = 0; i < parsedJson['response'].length; i++) {
+        items.add({
+          "bill_id": parsedJson['response'][i]['bill_id'].toString(),
+          "amount": parsedJson['response'][i]['amount'].toString(),
+          "email": parsedJson['response'][i]['m_email'],
+          "pay_status": parsedJson['response'][i]['pay_status']
+        });
+      }
     }
 
     return Scaffold(
@@ -72,7 +72,7 @@ class BillStatus extends StatelessWidget {
                             : const Color.fromARGB(255, 73, 255, 22),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     )
                   ],

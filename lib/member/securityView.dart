@@ -1,7 +1,5 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-//import 'dart:io';
 
 class SecurityView extends StatelessWidget {
   final Uint8List image;

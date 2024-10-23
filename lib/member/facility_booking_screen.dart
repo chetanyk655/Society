@@ -1,6 +1,5 @@
 import 'package:first_app/member/facility_status.dart';
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:first_app/services/api.dart';
 import 'package:first_app/member/current_signed.dart';

@@ -1,9 +1,5 @@
-import 'dart:typed_data';
-
-import 'package:first_app/admin/admin_login.dart';
 import 'package:first_app/admin/admin_payment.dart';
 import 'package:flutter/material.dart';
-//import 'dart:io';
 
 class MemberShow extends StatelessWidget {
   final String member_id;

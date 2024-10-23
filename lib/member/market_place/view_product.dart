@@ -1,7 +1,5 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-//import 'dart:io';
 
 class ViewProductPage extends StatelessWidget {
   final Uint8List image;
@@ -60,7 +58,7 @@ class ViewProductPage extends StatelessWidget {
               'Description:',
               style: TextStyle(
                 fontSize: 24,
-                color:  Color.fromARGB(255, 15, 13, 13),
+                color: Color.fromARGB(255, 15, 13, 13),
               ),
             ),
             const SizedBox(height: 10),

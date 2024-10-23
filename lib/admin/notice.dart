@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class NoticePage extends StatefulWidget {
   const NoticePage({super.key});
@@ -14,30 +12,19 @@ class NoticePage extends StatefulWidget {
 }
 
 class _NoticePageState extends State<NoticePage> {
-  File? _file;
   final TextEditingController _notice = TextEditingController();
+  late File _file = File(""); // To hold the selected file
 
   Future<void> _pickFile() async {
-    // Request storage permission
-    if (await Permission.storage.request().isGranted) {
-      // Permission granted, allow picking files
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['pdf', 'txt'],
-      );
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'txt'], // Limit to PDF and text files
+    );
 
-      if (result != null && result.files.isNotEmpty) {
-        setState(() {
-          _file = File(result.files.single.path!);
-        });
-      } else {
-        print('No file selected');
-      }
-    } else {
-      // Permission is denied or permanently denied
-      if (await Permission.storage.isPermanentlyDenied) {
-        openAppSettings(); // Open app settings if permission is permanently denied
-      }
+    if (result != null) {
+      setState(() {
+        _file = File(result.files.single.path!);
+      });
     }
   }
 
@@ -79,7 +66,7 @@ class _NoticePageState extends State<NoticePage> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _pickFile,
                   child: Text('Pick File (PDF/Text)'),
@@ -88,19 +75,22 @@ class _NoticePageState extends State<NoticePage> {
                 _file != null
                     ? Text('File: ${_file!.path.split('/').last}')
                     : Text('No file selected'),
-                SizedBox(height: 5),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Upload File'),
-                ),
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
-                    Api()
-                        .storeNotice({"contents": _notice.text}).then((res) => {
-                              //here you get all result from server
-                              //please notify send request as successful as a modal pop up
-                            });
+                    if (_file != Null) {
+                      Api().storeNotice({"contents": _notice.text}, _file).then(
+                          (res) => {
+                                //here you get all result from server
+                                //please notify send request as successful as a modal pop up
+                              });
+                    } else {
+                      Api().storeNotice({"contents": _notice.text}, null).then(
+                          (res) => {
+                                //here you get all result from server
+                                //please notify send request as successful as a modal pop up
+                              });
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue, // Button color

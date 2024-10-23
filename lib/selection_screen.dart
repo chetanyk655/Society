@@ -1,6 +1,5 @@
 import 'package:first_app/admin_auth.dart';
 import 'package:first_app/member/member_login.dart';
-import 'package:first_app/admin/signin_or_signup.dart';
 import 'package:flutter/material.dart';
 
 class SelectionScreen extends StatelessWidget {

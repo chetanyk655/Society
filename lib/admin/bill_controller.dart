@@ -1,8 +1,5 @@
-//import 'dart:ffi';
-
 import 'package:first_app/admin/bill_status.dart';
 import 'package:flutter/material.dart';
-import 'package:first_app/services/api.dart';
 
 class AdminPaymentControl extends StatelessWidget {
   AdminPaymentControl({super.key, required this.response});
@@ -36,15 +33,6 @@ class AdminPaymentControl extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                      onPressed: () => {},
-                      child: const Text("Send Previous Month Bills")),
-                  const SizedBox(
-                    height: 30,
-                  ),
                   ElevatedButton(
                       onPressed: () => {
                             Navigator.push(

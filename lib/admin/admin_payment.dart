@@ -1,10 +1,8 @@
-//import 'dart:ffi';
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:first_app/services/api.dart';
 
+// ignore: must_be_immutable
 class AdminPayment extends StatelessWidget {
   AdminPayment({super.key, required this.email});
   final _amountController = TextEditingController();
@@ -88,7 +86,8 @@ class AdminPayment extends StatelessWidget {
                                         const Color.fromARGB(255, 38, 38, 38),
                                     title: Text(
                                       'Confirm Amount ₹${_amountController.text}',
-                                      style: TextStyle(color: Colors.white),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                     actions: [
                                       TextButton(
@@ -119,9 +118,6 @@ class AdminPayment extends StatelessWidget {
                                             Api()
                                                 .getadminBill(email)
                                                 .then((res) => {
-                                                      print(jsonDecode(
-                                                              res)['response']
-                                                          [0]['b_id']),
                                                       Api().storeMaintenance({
                                                         "amount":
                                                             _amountController

@@ -1,6 +1,4 @@
-//import 'dart:ffi';
-
-//import 'package:first_app/society_details.dart';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,7 +6,7 @@ import 'package:first_app/member/current_signed.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Api {
-  static const baseUrl = "https://4c8f-103-134-7-130.ngrok-free.app/api";
+  static const baseUrl = "http://192.168.1.7:2000/api";
   send(String name, String city, String state) async {
     var url = Uri.parse("${baseUrl}/send");
     try {
@@ -137,23 +135,52 @@ class Api {
     }
   }
 
-  Future storeNotice(body) async {
-    var url = Uri.parse("$baseUrl/store-notice");
-    final res = await http.post(url, body: jsonEncode(body), headers: {
-      'Content-Type': 'application/json', // Specify that you're sending JSON
+  Future storeNotice(body, File? file) async {
+    if (file!.path == '') {
+      var url = Uri.parse("$baseUrl/notice/withoutFile");
+      final res = await http.post(url, body: body);
+      if (res.statusCode == 200) {
+        return res;
+      }
+    } else {
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse("$baseUrl/notice/withFile"), // Update with your server URL
+      );
+      request.files.add(
+        await http.MultipartFile.fromPath('file', file!.path,
+            filename: file.path.split('/').last),
+      );
+      request.fields['contents'] = body['contents'];
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        return response;
+      }
+    }
+  }
+
+  Future getNoticeAttachments(body) async {
+    var url = Uri.parse(
+        "$baseUrl/notice/file?date=${body['date']}&time=${body['time']}");
+    final res = await http.get(url, headers: {
+      'Content-Type': 'application/json',
     });
     if (res.statusCode == 200) {
-      return res;
+      return res.body;
+    } else {
+      return res.body;
     }
   }
 
   Future getNotice() async {
-    var url = Uri.parse("$baseUrl/get-notice");
-    final res = await http.get(url);
+    var url = Uri.parse("$baseUrl/notice");
+    final res = await http.get(url, headers: {
+      'Content-Type': 'application/json',
+    });
     if (res.statusCode == 200) {
       return res.body;
     } else {
-      return null;
+      return res.body;
     }
   }
 
@@ -283,6 +310,17 @@ class Api {
     }
   }
 
+  Future deleteProduct(body) async {
+    var url = Uri.parse("$baseUrl/marketplace");
+    final res = await http.delete(url, body: body);
+
+    if (res.statusCode == 200) {
+      return res.body;
+    } else {
+      return res.body;
+    }
+  }
+
   Future deleteBill(body) async {
     var url = Uri.parse("$baseUrl/bills");
     final res = await http.delete(url, body: jsonEncode(body), headers: {
@@ -310,7 +348,7 @@ class Api {
     request.fields['price'] = body['price']!; // Price
     request.fields['descp'] = body['desc']!; // Description
     request.fields['filename'] = body['filename']!; // Filename
-
+    request.fields['ph'] = body['ph']!;
     // Send the request
     final response = await request.send();
 

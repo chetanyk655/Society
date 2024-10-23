@@ -1,5 +1,4 @@
 import 'package:first_app/admin/admin_login.dart';
-//import 'package:first_app/admin/member_registration.dart';
 import 'package:first_app/admin/admin_register_page.dart';
 import 'package:first_app/member/security_call.dart';
 import 'package:flutter/material.dart';
